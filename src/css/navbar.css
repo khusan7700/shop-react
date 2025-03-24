@@ -143,6 +143,160 @@
   filter: invert(70%);
 }
 
+/* --------------------------------------------------------- */
+/* OTHER NAVBAR */
+/* OTHER NAVBAR */
+/* OTHER NAVBAR */
+/* OTHER NAVBAR */
+/* OTHER NAVBAR */
+/* OTHER NAVBAR */
+/* OTHER NAVBAR */
+/* --------------------------------------------------------- */
+
+.other-navbar {
+  width: auto;
+  height: 400px;
+  display: flex;
+  background-color: rgb(13, 13, 39);
+}
+
+.other-navbar .navbar-container {
+  margin-top: 55px;
+  height: 642px;
+}
+
+.other-navbar .navbar-container .link-container {
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+}
+
+.other-navbar .navbar-container .link-container .brand-logo {
+  width: 150px;
+  height: 30px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.other-navbar .navbar-container .link-container .brand-logo img {
+  width: 70px;
+  height: 70px;
+}
+
+.other-navbar .navbar-container .navbar-links .login-button {
+  background: blue;
+  color: white;
+}
+
+.other-navbar .navbar-container .navbar-links .login-button {
+  background: blue;
+  color: white;
+}
+.other-navbar .navbar-container .navbar-links .user-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 24px;
+}
+
+.other-navbar a {
+  text-decoration: none;
+  color: white;
+  font-weight: 700;
+}
+
+.other-navbar a span {
+  text-decoration: none;
+  color: white;
+}
+
+.other-navbar a:hover {
+  color: gray;
+}
+
+.other-navbar .active {
+  font-size: 20px;
+  font-weight: bold;
+  color: rgb(55, 0, 255);
+}
+
+.other-navbar .navbar-container .header-frame {
+  margin-top: 142px;
+  height: 462px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.other-navbar .navbar-container .header-frame .detail {
+  width: 510px;
+  display: flex;
+  flex-direction: column;
+}
+
+.other-navbar .navbar-container .header-frame .detail .head-main-txt {
+  width: 450px;
+  height: 150px;
+  color: white;
+  font-size: 33px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  letter-spacing: -0.75px;
+}
+.other-navbar .navbar-container .header-frame .detail .wel-txt {
+  width: 510px;
+  height: 42px;
+  margin-top: 30px;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.54px;
+  color: wheat;
+}
+
+.other-navbar .navbar-container .header-frame .detail .service-txt {
+  width: 153px;
+  height: 23px;
+  margin-top: 25px;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  letter-spacing: -0.3px;
+  color: rgb(157, 157, 196);
+}
+.other-navbar .navbar-container .header-frame .detail .signup {
+  margin-top: 70px;
+}
+
+.other-navbar .navbar-container .header-frame .detail .signup .signup-button {
+  width: 210px;
+  height: 60px;
+  border-radius: 4px;
+  background: blue;
+  color: white;
+}
+
+.other-navbar .navbar-container .logo-frame {
+  margin-top: 3px;
+  width: 690px;
+  height: 419px;
+}
+
+.other-navbar .navbar-container .logo-frame .logo-img {
+  width: 600px;
+  height: 600px;
+  background: url(/public/Restaurant.svg);
+  background-size: contain;
+  background-repeat: no-repeat;
+  filter: invert(70%);
+}
 /* MOBILE */
 /* -------------------------------------------------------------- */
 /* -------------------------------------------------------------- */
@@ -174,10 +328,36 @@
   .home-navbar .navbar-container .header-frame .logo-frame {
     display: none;
   }
+
+  /* ---------------------------othe-rnavbar------------------------------------------ */
+  .other-navbar {
+    width: auto;
+    height: 400px;
+    display: flex;
+    background-color: rgb(13, 13, 39);
+  }
+
+  .other-navbar .navbar-links {
+    width: auto;
+    display: none;
+  }
+
+  .other-navbar .navbar-links a {
+    display: none;
+  }
+  .other-navbar .navbar-links .link-container {
+    justify-content: center;
+  }
+  .other-navbar .navbar-container .header-frame .logo-frame {
+    display: none;
+  }
 }
 
 @media (max-width: 568px) {
   .home-navbar .navbar-links a {
+    font-size: 13px;
+  }
+  .other-navbar .navbar-links a {
     font-size: 13px;
   }
 }
@@ -197,6 +377,25 @@
   }
 
   .home-navbar .navbar-container .header-frame .detail .wel-txt {
+    font-size: 25px;
+  }
+
+  /* ----------------------------------------------------------------------- */
+  .other-navbar .navbar-links a {
+    font-size: 14px;
+  }
+
+  .other-navbar .navbar-container .header-frame .detail .head-main-txt {
+    width: 350px;
+
+    font-size: 30px;
+  }
+
+  .other-navbar .navbar-container .header-frame .logo-frame {
+    display: none;
+  }
+
+  .other-navbar .navbar-container .header-frame .detail .wel-txt {
     font-size: 25px;
   }
 }
@@ -255,8 +454,66 @@
   color: white;
 }
 
+/* ---------------------------------------------------------------------------- */
+
+.other-navbar .mobile-menu .mobile-menu-box {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.other-navbar .mobile-menu .mobile-menu-box .menu {
+  width: 30px;
+  height: 5px;
+  background-color: blue;
+  border-radius: 10px;
+}
+
+.other-navbar .mobile-menu {
+  height: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.other-navbar .mobile-menu .first {
+  width: 1.5rem; /* 6 * 0.25rem = 1.5rem */
+  height: 0.25rem; /* 1 * 0.25rem = 0.25rem */
+  background-color: #3b82f6; /* bg-blue-500 */
+  border-radius: 0.125rem; /* rounded-sm = 0.125rem */
+  transform-origin: left; /* origin-left */
+  transition: all 0.5s ease-in-out; /* ease-inout duration-500 */
+}
+
+.other-navbar .mobile-menu .menu-links {
+  position: absolute;
+  left: 0;
+  top: 6rem; /* 24 * 0.25rem = 6rem */
+  width: 100%;
+  height: calc(100vh - 96px);
+  background-color: rgba(106, 94, 133, 0.3); /* Shaffof oq fon */
+  backdrop-filter: blur(10px); /* Blur effekti */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center; /* tailwindda 'justify-conter' noto'g'ri, to'g'risi 'justify-center' */
+  gap: 2rem; /* 8 * 0.25rem = 2rem */
+  font-weight: 700;
+  font-size: 22px; /* 1.25rem = 20px (text-xl) */
+  z-index: 100000;
+}
+
+.other-navbar .mobile-menu .menu-links a {
+  color: white;
+}
+
 @media (max-width: 768px) {
   .home-navbar .mobile-menu .mobile-menu-box {
+    display: flex;
+  }
+
+  .other-navbar .mobile-menu .mobile-menu-box {
     display: flex;
   }
 }
