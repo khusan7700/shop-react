@@ -6,6 +6,10 @@ export function Menu() {
   const [isOpen, setIsOpen] = useState(false);
   const authMember = true;
 
+  const handleLinkClick = () => {
+    setIsOpen(false); // Link bosilganda menyuni yopish
+  };
+
   return (
     <div className="mobile-menu">
       <div
@@ -20,12 +24,14 @@ export function Menu() {
         <div className="menu-links">
           <NavLink
             to={"/"}
+            onClick={handleLinkClick}
             className={({ isActive }) => (isActive ? "active" : "")}
           >
             Home
           </NavLink>
           <NavLink
             to={"/product"}
+            onClick={handleLinkClick}
             className={({ isActive }) => (isActive ? "active" : "")}
           >
             Product
@@ -33,6 +39,7 @@ export function Menu() {
           {authMember ? (
             <NavLink
               to={"/orders"}
+              onClick={handleLinkClick}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               Orders
@@ -41,6 +48,7 @@ export function Menu() {
           {authMember ? (
             <NavLink
               to={"/member-page"}
+              onClick={handleLinkClick}
               className={({ isActive }) => (isActive ? "active" : "")}
             >
               My Page
@@ -48,12 +56,17 @@ export function Menu() {
           ) : null}
           <NavLink
             to={"/help"}
+            onClick={handleLinkClick}
             className={({ isActive }) => (isActive ? "active" : "")}
           >
             Help
           </NavLink>
           {!authMember ? (
-            <Button variant="contained" style={{ background: "blue" }}>
+            <Button
+              onClick={handleLinkClick}
+              variant="contained"
+              style={{ background: "blue" }}
+            >
               Login
             </Button>
           ) : null}

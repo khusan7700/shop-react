@@ -78,13 +78,13 @@
 }
 
 .home-navbar .navbar-container .header-frame .detail {
-  width: 510px;
+  width: 390px;
   display: flex;
   flex-direction: column;
 }
 
 .home-navbar .navbar-container .header-frame .detail .head-main-txt {
-  width: 450px;
+  width: 390px;
   height: 150px;
   color: white;
   font-size: 33px;
@@ -297,6 +297,10 @@
   background-repeat: no-repeat;
   filter: invert(70%);
 }
+
+#other-basket {
+  display: none;
+}
 /* MOBILE */
 /* -------------------------------------------------------------- */
 /* -------------------------------------------------------------- */
@@ -327,6 +331,10 @@
   }
   .home-navbar .navbar-container .header-frame .logo-frame {
     display: none;
+  }
+
+  #other-basket {
+    display: flex;
   }
 
   /* ---------------------------othe-rnavbar------------------------------------------ */
@@ -361,9 +369,15 @@
     font-size: 13px;
   }
 }
-@media (max-width: 480px) {
+@media (max-width: 390px) {
   .home-navbar .navbar-links a {
     font-size: 14px;
+  }
+  .home-navbar .navbar-container .header-frame .detail .wel-txt {
+    width: 390px;
+    height: 42px;
+    margin-top: 30px;
+    font-size: 36px;
   }
 
   .home-navbar .navbar-container .header-frame .detail .head-main-txt {
@@ -378,6 +392,11 @@
 
   .home-navbar .navbar-container .header-frame .detail .wel-txt {
     font-size: 25px;
+    width: 370px;
+  }
+
+  .other-navbar .navbar-container .header-frame .detail {
+    width: 390px;
   }
 
   /* ----------------------------------------------------------------------- */
@@ -399,6 +418,150 @@
     font-size: 25px;
   }
 }
+/*  MENU */
+
+/* ------------------------------------------------------------- */
+/* ------------------------------------------------------------- */
+/* ------------------------------------------------------------- */
+/* ------------------------------------------------------------- */
+/* ------------------------------------------------------------- */
+
+/* BASKET */
+
+.basket-frame {
+  position: relative;
+  padding: 10px 4px 0px 4px;
+  width: 370px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  background: #494983;
+  border-radius: 16px;
+}
+
+.basket-frame .all-check-box {
+  padding: 0px 6px;
+  width: 100%;
+  height: 35px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: #5d567c;
+  border-width: 1px 0px;
+  border-style: solid;
+  border-color: #c7c7c7;
+  color: white;
+}
+
+.basket-frame .basket-info-box {
+  position: relative;
+  margin-top: 6px;
+  width: 100%;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.basket-info-box .product-img {
+  width: 60px;
+  height: 60px;
+  filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.25));
+  border-radius: 29px;
+}
+
+.basket-info-box .product-name {
+  margin-left: 11px;
+  width: 185px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  color: #ffffff;
+}
+
+.basket-info-box .product-price {
+  width: 80px;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 22px;
+  color: #fffefe;
+}
+
+.basket-info-box
+  .css-11u53oe-MuiSelect-select-MuiInputBase-input-MuiOutlinedInput-input {
+  padding: 6.5px 14px;
+}
+
+.basket-info-box .css-ece9u5 {
+  min-width: 72px;
+}
+
+.basket-frame .cancel-btn {
+  position: absolute;
+  top: 33%;
+  right: 2%;
+  cursor: pointer;
+}
+
+.basket-frame .basket-order {
+  margin-top: 10px;
+  width: 100%;
+  height: 64px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  border-top: 1px solid rgba(208, 208, 208, 0.5);
+}
+
+.basket-order .price {
+  width: 200px;
+  display: flex;
+  font-family: "Poppins";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 30px;
+  color: #fefcfc;
+}
+
+.basket-frame .orders-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow-y: scroll;
+}
+
+.basket-frame .orders-wrapper::-webkit-scrollbar {
+  width: 10px;
+}
+
+.basket-frame .orders-wrapper::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 5px;
+}
+
+.basket-frame .orders-wrapper::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.basket-frame .orders-main-wrapper {
+  position: relative;
+  overflow: hidden;
+  margin-top: 10px;
+  width: 100%;
+  height: 260px;
+  display: flex;
+  flex-direction: column;
+}
+
 /*  MENU */
 /* ------------------------------------------------------------- */
 
@@ -518,163 +681,3 @@
   }
 }
 /* ------------------------------------------------------------- */
-/*------------------star animation start------------------*/
-span {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 4px;
-  height: 4px;
-  background: #fff;
-  border-radius: 50%;
-  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.1),
-    0 0 0 8px rgba(255, 255, 255, 0.1), 0 0 20px rgba(255, 255, 255, 1);
-  animation: animate 3s linear infinite;
-}
-span::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 300px;
-  height: 1px;
-  background: linear-gradient(90deg, #fff, transparent);
-}
-
-@keyframes animate {
-  0% {
-    transform: rotate(315deg) translateX(0);
-    opacity: 0.7;
-  }
-  70% {
-    opacity: 0.7;
-  }
-  100% {
-    transform: rotate(315deg) translateX(-1000px);
-    opacity: 0;
-  }
-}
-
-span:nth-child(1) {
-  top: 0;
-  right: 0;
-  animation-delay: 0;
-  animation-duration: 1s;
-}
-span:nth-child(2) {
-  top: 0;
-  right: 80px;
-  left: initial;
-  animation-delay: 0.2s;
-  animation-duration: 3s;
-}
-span:nth-child(3) {
-  top: 80px;
-  right: 0px;
-  left: initial;
-  animation-delay: 0.4s;
-  animation-duration: 2s;
-}
-span:nth-child(4) {
-  top: 0px;
-  right: 180px;
-  left: initial;
-  animation-delay: 0.6s;
-  animation-duration: 1.5s;
-}
-span:nth-child(5) {
-  top: 0px;
-  right: 400px;
-  left: initial;
-  animation-delay: 0.8s;
-  animation-duration: 2.5s;
-}
-span:nth-child(6) {
-  top: 0px;
-  right: 600px;
-  left: initial;
-  animation-delay: 1s;
-  animation-duration: 3s;
-}
-span:nth-child(7) {
-  top: 300px;
-  right: 0px;
-  left: initial;
-  animation-delay: 1.2s;
-  animation-duration: 1.75s;
-}
-span:nth-child(8) {
-  top: 0px;
-  right: 700px;
-  left: initial;
-  animation-delay: 1.4s;
-  animation-duration: 1.25s;
-}
-span:nth-child(9) {
-  top: 0px;
-  right: 1000px;
-  left: initial;
-  animation-delay: 0.75s;
-  animation-duration: 2.25s;
-}
-span:nth-child(10) {
-  top: 0px;
-  right: 450px;
-  left: initial;
-  animation-delay: 2.75s;
-  animation-duration: 2.25s;
-}
-/*------------------star animation end------------------*/
-
-.swiper {
-  width: 100%;
-  height: 100%;
-}
-
-.swiper-slide {
-  text-align: center;
-  font-size: 18px;
-  background: #fff;
-
-  /* Center slide text vertically */
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.swiper-slide img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.autoplay-progress {
-  position: absolute;
-  right: 16px;
-  bottom: 16px;
-  z-index: 10;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  color: var(--swiper-theme-color);
-}
-
-.autoplay-progress svg {
-  --progress: 0;
-  position: absolute;
-  left: 0;
-  top: 0px;
-  z-index: 10;
-  width: 100%;
-  height: 100%;
-  stroke-width: 4px;
-  stroke: var(--swiper-theme-color);
-  fill: none;
-  stroke-dashoffset: calc(125.6px * (1 - var(--progress)));
-  stroke-dasharray: 125.6;
-  transform: rotate(-90deg);
-}
