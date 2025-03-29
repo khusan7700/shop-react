@@ -2,6 +2,7 @@ import { Box, Button, Container, Stack } from "@mui/material";
 import { NavLink } from "react-router-dom";
 import { Menu } from "./Menu";
 import Basket from "./Basket";
+import { motion } from "framer-motion";
 
 export default function HomeNavbar() {
   const authMember = true;
@@ -88,7 +89,14 @@ export default function HomeNavbar() {
           ) : null}
           <Menu />
         </Stack>
-        <Stack className="header-frame">
+        <Stack
+          component={motion.div}
+          initial={{ y: 50, opacity: 0 }}
+          whileInView={{ y: 0, opacity: 1 }}
+          transition={{ duration: 0.7 }}
+          viewport={{ amount: 0.4 }}
+          className="header-frame"
+        >
           <Stack className="detail">
             <Box className="head-main-txt">
               Good food, good friends, good times. Where every meal is a

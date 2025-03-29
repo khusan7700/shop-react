@@ -17,12 +17,7 @@ const FreshDishes = [
 
 export default function NewDishes() {
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className={"new-products-frame"}
-    >
+    <div className={"new-products-frame"}>
       <Container>
         <Stack className={"main"}>
           <Box className={"category-title"}>Fresh Menu</Box>
@@ -31,7 +26,16 @@ export default function NewDishes() {
               {FreshDishes.length !== 0 ? (
                 FreshDishes.map((ele, index) => {
                   return (
-                    <Card key={index} variant="outlined" className={"card"}>
+                    <Card
+                      component={motion.div}
+                      initial={{ y: 50, opacity: 0 }}
+                      whileInView={{ y: 0, opacity: 1 }}
+                      transition={{ duration: 0.7, delay: index * 0.2 }}
+                      viewport={{ amount: 0.4 }}
+                      key={index}
+                      variant="outlined"
+                      className={"card"}
+                    >
                       <CardOverflow>
                         <div className={"product-sale"}>Normal size</div>
                         <AspectRatio ratio="1">
@@ -65,6 +69,6 @@ export default function NewDishes() {
           </Stack>
         </Stack>
       </Container>
-    </motion.div>
+    </div>
   );
 }
