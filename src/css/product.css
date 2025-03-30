@@ -1,0 +1,152 @@
+.products-page {
+  width: 100%;
+  height: 1200px;
+  background-color: rgb(22, 18, 49);
+}
+
+.products-page .product .product-top {
+  width: 100%;
+  height: 100px;
+  background-color: rgb(119, 112, 165);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.products-page .product .product-top .product-txt {
+  width: 300px;
+  height: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  color: white;
+  font-size: 25px;
+  font-weight: 700;
+}
+
+.products-page .product .product-frame {
+  width: 1300px;
+  height: 100%;
+}
+
+.products-page .product .product-frame {
+  width: auto;
+  height: 800px;
+  margin-top: 30px;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+
+/* product left */
+.products-page .product .product-frame .product-left {
+  width: 200px;
+  height: 500px;
+  margin-top: 50px;
+  gap: 20px;
+}
+
+.products-page .product .product-frame .product-left .left-catigory {
+  width: auto;
+  height: auto;
+  padding: 20px;
+}
+
+.products-page .product .product-frame .product-left .category-txt {
+  width: auto;
+  height: auto;
+  display: flex;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 5px;
+}
+
+/* product right */
+.products-page .product .product-frame .product-right {
+  width: 900px;
+  height: auto;
+  margin-top: 50px;
+}
+
+.products-page .product .product-frame .product-right .menu {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+}
+.products-page .product .product-frame .product-right .card-box {
+  width: auto;
+  height: 100%;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.products-page .product .product-frame .product-right .card-box .card {
+  width: 250px;
+  height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  color: white;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  border-radius: 10px;
+}
+
+.products-page .product .product-frame .product-right .card-box .card p {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  font-weight: 700;
+}
+
+.products-page .product .product-frame .product-right .card-box .card .box {
+  width: 250px;
+  height: 250px;
+  border-radius: 5px;
+}
+
+.products-page .product .product-frame .product-right .card-box .card .box img {
+  width: 250px;
+  height: 250px;
+  object-fit: cover; /* Rasm nisbatini saqlab, joyga mos kelishi uchun */
+  border-radius: 5px;
+  transition: filter 0.3s ease; /* Hover effekti uchun animatsiya */
+}
+
+.products-page
+  .product
+  .product-frame
+  .product-right
+  .card-box
+  .card
+  .box
+  img:hover {
+  filter: brightness(50%); /* Rasmni qoraytirish */
+}
+
+.products-page
+  .product
+  .product-frame
+  .product-right
+  .card-box
+  .card
+  .box
+  .box-txt {
+  width: auto;
+  display: flex;
+  margin-top: 5px;
+  justify-content: center;
+  flex-direction: row;
+  border-radius: 5px;
+  background: rgb(82, 82, 82);
+}

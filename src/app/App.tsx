@@ -14,6 +14,7 @@ import Footer from "../components/footer";
 import "../css/app.css";
 import "../css/navbar.css";
 import "../css/footer.css";
+import "../css/product.css";
 
 function App() {
   const location = useLocation();
@@ -22,7 +23,7 @@ function App() {
     <>
       {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar />}
       <Routes>
-        <Route path="/products" element={<ProductsPage />} />
+        <Route path="/product" element={<ProductsPage />} />
         <Route path="/orders" element={<OrdersPage />} />
         <Route path="/member-page" element={<UserPage />} />
         <Route path="/" element={<HomePage />} />

@@ -1,5 +1,10 @@
-import { Container } from "@mui/material";
+import React from "react";
+import Products from "./Products";
 
 export default function ProductsPage() {
-  return <Container>ProductsPage</Container>;
+  return (
+    <div className={"products-page"}>
+      <Products />
+    </div>
+  );
 }

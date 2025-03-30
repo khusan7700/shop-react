@@ -155,7 +155,7 @@
 
 .other-navbar {
   width: auto;
-  height: 400px;
+  height: 170px;
   display: flex;
   background-color: rgb(13, 13, 39);
 }
@@ -340,7 +340,7 @@
   /* ---------------------------othe-rnavbar------------------------------------------ */
   .other-navbar {
     width: auto;
-    height: 400px;
+    height: 180px;
     display: flex;
     background-color: rgb(13, 13, 39);
   }
