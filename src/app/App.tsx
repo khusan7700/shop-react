@@ -15,6 +15,9 @@ import "../css/navbar.css";
 import "../css/footer.css";
 import "../css/product.css";
 import "../css/order.css";
+import "../css/userPage.css";
+import "../css/help.css";
+import HelpPage from "../screens/helpPage";
 
 function App() {
   const location = useLocation();
@@ -23,6 +26,7 @@ function App() {
     <>
       {location.pathname === "/" ? <HomeNavbar /> : <OtherNavbar />}
       <Routes>
+        <Route path="/help" element={<HelpPage />} />
         <Route path="/product" element={<ProductsPage />} />
         <Route path="/orders" element={<OrdersPage />} />
         <Route path="/member-page" element={<UserPage />} />
