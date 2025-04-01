@@ -1,0 +1,312 @@
+.order-page {
+  width: 100%;
+  height: 1100px;
+  background-color: rgb(19, 19, 72);
+}
+.order-page .order-txt {
+  width: 100%;
+  height: 100px;
+  background-color: #7770a5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(233, 233, 233);
+  font-size: 24px;
+  font-weight: 700;
+}
+.order-page .order-txt .txt {
+  width: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: rgb(233, 233, 233);
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.order-page .order-left {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.order-page .order-left .table_list {
+  width: 100%;
+  height: auto;
+}
+
+/* PAUSED ORDERS */
+.order-page .order-left .order-main-content .order-main-box {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+}
+.order-page .order-left .order-main-content .order-main-box .order-box-scroll {
+  width: auto;
+  height: auto;
+  background-color: rgb(119, 112, 165);
+  margin-top: 20px;
+  border-radius: 10px 10px 0px 0px;
+}
+.order-page
+  .order-left
+  .order-main-content
+  .order-main-box
+  .order-box-scroll
+  .orders-name-price {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  justify-content: space-around;
+  margin-top: 5px;
+}
+.order-page
+  .order-left
+  .order-main-content
+  .order-main-box
+  .order-box-scroll
+  .order-dish-class {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  color: rgb(235, 235, 235);
+}
+
+.order-page
+  .order-left
+  .order-main-content
+  .order-main-box
+  .order-box-scroll
+  .price-box {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  color: rgb(235, 235, 235);
+}
+.order-page
+  .order-left
+  .order-main-content
+  .order-main-box
+  .order-box-scroll
+  .price-box
+  img {
+  width: 25px;
+  height: 25px;
+  filter: invert(100%);
+  margin-top: 13px;
+}
+
+.order-page .order-left .order-main-content .order-main-box .total-price-box {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: space-evenly;
+  flex-direction: row;
+  background-color: rgb(96, 89, 145);
+  padding-left: 10px;
+  padding-right: 10px;
+}
+.order-page
+  .order-left
+  .order-main-content
+  .order-main-box
+  .total-price-box
+  .box-total {
+  width: auto;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+  flex-direction: row;
+  color: white;
+}
+
+.order-page
+  .order-left
+  .order-main-content
+  .order-main-box
+  .total-price-box
+  .box-total
+  img {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.order-page
+  .order-left
+  .order-main-content
+  .order-main-box
+  .total-price-box
+  .box-total
+  p {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.order-page .order-left .order-main-content .order-main-box .btn button {
+  width: 100px;
+  height: 35px;
+  gap: 10px;
+  margin-top: 10px;
+  margin-left: 5px;
+}
+
+@media (max-width: 390px) {
+  .order-page {
+    width: 100%;
+    height: auto;
+    background-color: rgb(19, 19, 72);
+  }
+  .order-page .order-left .table_list {
+    width: 380px;
+  }
+  .order-page
+    .order-left
+    .table_list
+    .css-cvyzvg-MuiButtonBase-root-MuiTab-root {
+    width: 126px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
+  .order-page
+    .order-left
+    .table_list
+    .css-cvyzvg-MuiButtonBase-root-MuiTab-root:active {
+    color: blue;
+  }
+  .order-page
+    .order-left
+    .order-main-content
+    .order-main-box
+    .order-box-scroll {
+    width: 380px;
+  }
+
+  .order-page .order-left .order-main-content .order-main-box {
+    width: 380px;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+  }
+  .order-page
+    .order-left
+    .order-main-content
+    .order-main-box
+    .order-box-scroll {
+    width: auto;
+    height: auto;
+    background-color: rgb(119, 112, 165);
+    margin-top: 10px;
+    border-radius: 10px 10px 0px 0px;
+  }
+
+  .order-page
+    .order-left
+    .order-main-content
+    .order-main-box
+    .order-box-scroll {
+    margin-top: 10px;
+  }
+
+  .order-page
+    .order-left
+    .order-main-content
+    .order-main-box
+    .order-box-scroll
+    .orders-name-price {
+    width: auto;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: space-around;
+    margin-top: 5px;
+    font-size: 14px;
+  }
+  .order-page
+    .order-left
+    .order-main-content
+    .order-main-box
+    .order-box-scroll
+    .order-dish-class
+    img {
+    width: 40px;
+    height: 40px;
+  }
+  .order-page
+    .order-left
+    .order-main-content
+    .order-main-box
+    .order-box-scroll
+    .price-box
+    img {
+    width: 25px;
+    height: 25px;
+    filter: invert(100%);
+    margin-top: 13px;
+  }
+
+  .order-page .order-left .order-main-content .order-main-box .total-price-box {
+    padding-left: 5px;
+    padding-right: 5px;
+    font-size: 13px;
+  }
+
+  .order-page
+    .order-left
+    .order-main-content
+    .order-main-box
+    .total-price-box
+    .box-total
+    img {
+    margin-left: 2px;
+    margin-right: 2px;
+    filter: invert(100%);
+  }
+  .order-page
+    .order-left
+    .order-main-content
+    .order-main-box
+    .total-price-box
+    .box-total
+    p {
+    margin-left: 1px;
+    margin-right: 1px;
+  }
+  .order-page .order-left .order-main-content .order-main-box .btn button {
+    width: 20px;
+    height: 25px;
+    margin-top: 5px;
+    margin-left: 5px;
+    font-size: 11px;
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 765px) and (min-width: 391px) {
+  .order-page {
+    width: 100%;
+    height: 1100px;
+    background-color: rgb(19, 19, 72);
+  }
+  .order-page .order-left .order-main-content .order-main-box .btn button {
+    width: 80px;
+    height: 35px;
+    margin-top: 5px;
+    margin-left: 5px;
+    font-size: 11px;
+    display: flex;
+  }
+}
+
+@media screen and (max-width: 865px) and (min-width: 391px) {
+}

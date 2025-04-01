@@ -1,8 +1,7 @@
 import React from "react";
 
 import "../css/app.css";
-import { Box, Button, Container, Stack, Typography } from "@mui/material";
-import { Link, Route, Routes, useLocation } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import HomePage from "../screens/homePage";
 import ProductsPage from "../screens/productsPage";
 import OrdersPage from "../screens/ordersPage";
@@ -15,6 +14,7 @@ import "../css/app.css";
 import "../css/navbar.css";
 import "../css/footer.css";
 import "../css/product.css";
+import "../css/order.css";
 
 function App() {
   const location = useLocation();

@@ -1,6 +1,5 @@
 import React from "react";
-import { Box, Container, Stack } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Container, Stack } from "@mui/material";
 import styled from "styled-components";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import InstagramIcon from "@mui/icons-material/Instagram";
@@ -16,8 +15,6 @@ const Footers = styled.div`
 `;
 
 export default function Footer() {
-  const authMember = null;
-
   return (
     <Footers>
       <Container>

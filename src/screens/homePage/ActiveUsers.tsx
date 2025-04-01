@@ -1,6 +1,6 @@
 import React from "react";
 import { Box, Container, Stack } from "@mui/material";
-import { CardCover, CssVarsProvider, Typography } from "@mui/joy";
+import { CssVarsProvider, Typography } from "@mui/joy";
 import { motion } from "framer-motion";
 import Card from "@mui/joy/Card";
 import CardOverflow from "@mui/joy/CardOverflow";

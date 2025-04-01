@@ -28,7 +28,7 @@ export default function ChosenProduct() {
               (ele: string, index: number) => {
                 return (
                   <SwiperSlide key={index}>
-                    <img className="slider-image" src={ele} />
+                    <img className="slider-image" alt="img" src={ele} />
                   </SwiperSlide>
                 );
               }

@@ -6,7 +6,7 @@ export default function ProductsPage() {
   return (
     <div className={"products-page"}>
       <Products />
-      {/* <ChosenProduct /> */}
+      <ChosenProduct />
     </div>
   );
 }

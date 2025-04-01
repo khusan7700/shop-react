@@ -39,7 +39,7 @@ export default function NewDishes() {
                       <CardOverflow>
                         <div className={"product-sale"}>Normal size</div>
                         <AspectRatio ratio="1">
-                          <img src={ele.imagePath} alt="photo" />
+                          <img src={ele.imagePath} alt="img" />
                         </AspectRatio>
                       </CardOverflow>
 
