@@ -8,14 +8,23 @@ import AspectRatio from "@mui/joy/AspectRatio";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { motion } from "framer-motion";
 
-const FreshDishes = [
-  { productName: "manti", imagePath: "/img/manti.webp" },
-  { productName: "chuchvara", imagePath: "/img/chuchvara.webp" },
-  { productName: "norin", imagePath: "/img/norin.webp" },
-  { productName: "beshbarmoq", imagePath: "/img/beshbarmaq.webp" },
-];
+import { useSelector } from "react-redux";
+import { createSelector } from "reselect";
+import { retrieveNewDishes } from "./selector";
+import { Product } from "../../lib/types/product";
+import { ProductCollection } from "../../lib/enums/product.enum";
+import { serverApi } from "../../lib/config";
+
+/** REDUX SLICE & SELECTOR **/
+const newDishesRetriever = createSelector(retrieveNewDishes, (newDishes) => ({
+  newDishes,
+}));
 
 export default function NewDishes() {
+  const { newDishes } = useSelector(newDishesRetriever);
+
+  console.log("newDishes------->", newDishes);
+
   return (
     <div className={"new-products-frame"}>
       <Container>
@@ -23,23 +32,28 @@ export default function NewDishes() {
           <Box className={"category-title"}>Fresh Menu</Box>
           <Stack className={"cards-frame"}>
             <CssVarsProvider>
-              {FreshDishes.length !== 0 ? (
-                FreshDishes.map((ele, index) => {
+              {newDishes.length !== 0 ? (
+                newDishes.map((product: Product) => {
+                  const imagePath = `${serverApi}/${product.productImages[0]}`;
+                  const sizeVolume =
+                    product.productCollection === ProductCollection.DRINK
+                      ? product.productVolume + "l"
+                      : product.productSize + "size";
                   return (
                     <Card
                       component={motion.div}
                       initial={{ y: 50, opacity: 0 }}
                       whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.7, delay: index * 0.2 }}
+                      transition={{ duration: 0.7, delay: 0.2 }}
                       viewport={{ amount: 0.4 }}
-                      key={index}
                       variant="outlined"
+                      key={product._id}
                       className={"card"}
                     >
                       <CardOverflow>
-                        <div className={"product-sale"}>Normal size</div>
+                        <div className={"product-sale"}>{sizeVolume}</div>
                         <AspectRatio ratio="1">
-                          <img src={ele.imagePath} alt="img" />
+                          <img src={imagePath} alt="img" />
                         </AspectRatio>
                       </CardOverflow>
 
@@ -47,11 +61,13 @@ export default function NewDishes() {
                         <Stack className={"info"}>
                           <Stack className={"row"}>
                             <Typography className={"title"}>
-                              {ele.productName}
+                              {product.productName}
                             </Typography>
-                            <Typography className={"price"}>$12</Typography>
+                            <Typography className={"price"}>
+                              ${product.productPrice}
+                            </Typography>
                             <Typography className={"views"}>
-                              20
+                              {product.productViews}
                               <VisibilityIcon
                                 sx={{ FormatSize: 20, marginLeft: "5px" }}
                               />
