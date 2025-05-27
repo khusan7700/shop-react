@@ -25,7 +25,7 @@ export default function PausedOrders() {
               initial={{ y: 50, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 1 }}
-              viewport={{ amount: 0.4 }}
+              viewport={{ amount: 0.4, once: true }}
               className="order-main-box"
             >
               <Box className="order-box-scroll">

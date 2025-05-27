@@ -45,7 +45,7 @@ export default function NewDishes() {
                       initial={{ y: 50, opacity: 0 }}
                       whileInView={{ y: 0, opacity: 1 }}
                       transition={{ duration: 0.7, delay: 0.2 }}
-                      viewport={{ amount: 0.4 }}
+                      viewport={{ amount: 0.4, once: true }}
                       variant="outlined"
                       key={product._id}
                       className={"card"}

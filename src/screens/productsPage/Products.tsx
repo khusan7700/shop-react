@@ -3,6 +3,21 @@ import { Box, Button, Container, Stack } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { motion } from "framer-motion";
 
+import { createSelector } from "reselect";
+import { Product } from "../../lib/types/product";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setProducts } from "./slice";
+import { retrieveProducts } from "./selector";
+
+/** REDUX SLICE & SELECTOR **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setProducts: (data: Product[]) => dispatch(setProducts(data)),
+});
+
+const productsRetriever = createSelector(retrieveProducts, (products) => ({
+  products,
+}));
+
 const list = [
   { cardName: "Lavash", cardPrice: 19, imagePath: "/img/lavash.webp" },
   { cardName: "Palov", cardPrice: 15, imagePath: "/img/osh.webp" },
@@ -27,7 +42,7 @@ export default function Products() {
             initial={{ y: 50, opacity: 0 }}
             whileInView={{ y: 0, opacity: 1 }}
             transition={{ duration: 1 }}
-            viewport={{ amount: 0.4 }}
+            viewport={{ amount: 0.4, once: true }}
             className={"product-left"}
           >
             <Button variant="contained">Dish</Button>
@@ -42,7 +57,7 @@ export default function Products() {
               initial={{ y: 50, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 1 }}
-              viewport={{ amount: 0.4 }}
+              viewport={{ amount: 0.4, once: true }}
               className={"menu"}
             >
               <Button variant="contained">New</Button>
@@ -54,7 +69,7 @@ export default function Products() {
               initial={{ y: 50, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 1 }}
-              viewport={{ amount: 0.4 }}
+              viewport={{ amount: 0.4, once: true }}
               className={"card-box"}
             >
               {list.length !== 0 ? (

@@ -26,7 +26,7 @@ export default function FinishedOrders() {
               initial={{ y: 50, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
               transition={{ duration: 1 }}
-              viewport={{ amount: 0.4 }}
+              viewport={{ amount: 0.4, once: true }}
             >
               <Box className="order-box-scroll">
                 {/* number of items in each order */}
