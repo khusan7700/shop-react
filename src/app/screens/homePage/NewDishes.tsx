@@ -11,9 +11,9 @@ import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { retrieveNewDishes } from "./selector";
-import { Product } from "../../lib/types/product";
-import { ProductCollection } from "../../lib/enums/product.enum";
-import { serverApi } from "../../lib/config";
+import { Product } from "../../../lib/types/product";
+import { ProductCollection } from "../../../lib/enums/product.enum";
+import { serverApi } from "../../../lib/config";
 
 /** REDUX SLICE & SELECTOR **/
 const newDishesRetriever = createSelector(retrieveNewDishes, (newDishes) => ({

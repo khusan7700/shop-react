@@ -2,18 +2,20 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import { Box, Button, Container, Pagination, Stack } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { motion } from "framer-motion";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 
 import { createSelector } from "reselect";
-import { Product, ProductInquiry } from "../../lib/types/product";
+import { Product, ProductInquiry } from "../../../lib/types/product";
 import { Dispatch } from "@reduxjs/toolkit";
 import { setProducts } from "./slice";
 import { retrieveProducts } from "./selector";
 import { useDispatch, useSelector } from "react-redux";
-import ProductService from "../../app/services/ProductService";
-import { ProductCollection } from "../../lib/enums/product.enum";
-import { serverApi } from "../../lib/config";
+import ProductService from "../../services/ProductService";
+import { ProductCollection } from "../../../lib/enums/product.enum";
+import { serverApi } from "../../../lib/config";
 import Input from "@mui/joy/Input";
 import { useNavigate } from "react-router-dom";
+import { CartItem } from "../../../lib/types/search";
 
 /** REDUX SLICE & SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -24,7 +26,12 @@ const productsRetriever = createSelector(retrieveProducts, (products) => ({
   products,
 }));
 
-export default function Products() {
+interface ProductsProps {
+  onAdd: (item: CartItem) => void;
+}
+
+export default function Products(props: ProductsProps) {
+  const { onAdd } = props;
   const { setProducts } = actionDispatch(useDispatch());
   const { products } = useSelector(productsRetriever);
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
@@ -231,6 +238,19 @@ export default function Products() {
                         className="box"
                         onClick={() => choosenDishHandler(product._id)}
                       >
+                        <AddShoppingCartIcon
+                          className={"productBasket"}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            onAdd({
+                              _id: product._id,
+                              quantity: 1,
+                              name: product.productName,
+                              price: product.productPrice,
+                              image: product.productImages[0],
+                            });
+                          }}
+                        />
                         <img src={imagePath} alt="" />
                         <div className={"box-txt"}>
                           <p>{product.productName}</p>

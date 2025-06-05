@@ -3,8 +3,14 @@ import { NavLink } from "react-router-dom";
 import { Menu } from "./Menu";
 import Basket from "./Basket";
 import { motion } from "framer-motion";
+import { CartItem } from "../../../lib/types/search";
 
-export default function HomeNavbar() {
+interface NavbarProps {
+  cartItems: CartItem[];
+}
+
+export default function HomeNavbar(props: NavbarProps) {
+  const { cartItems } = props;
   const authMember = true;
 
   return (
@@ -67,7 +73,7 @@ export default function HomeNavbar() {
                 Help
               </NavLink>
             </Box>
-            <Basket />
+            <Basket cartItems={cartItems} />
             {!authMember ? (
               <Box>
                 <Button variant="contained" className="login-button">
@@ -84,7 +90,7 @@ export default function HomeNavbar() {
           </Stack>
           {authMember ? (
             <div id="other-basket">
-              <Basket />
+              <Basket cartItems={cartItems} />
             </div>
           ) : null}
           <Menu />

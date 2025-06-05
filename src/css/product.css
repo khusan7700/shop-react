@@ -81,6 +81,19 @@
   border-radius: 10px;
 }
 
+.products-page .product .product-frame .product-right .card-box .productBasket {
+  width: 40px;
+  height: 40px;
+  position: relative;
+  top: 100%;
+  left: 42%;
+  color: rgb(255, 255, 255);
+  z-index: 999;
+  cursor: pointer;
+  background-color: #1717dc82;
+  border-radius: 10px;
+  padding: 5px;
+}
 .products-page .product .product-frame .product-right .card-box .card p {
   width: 100%;
   height: auto;
@@ -338,9 +351,9 @@
 
 /* ----------------------------------------------------------------------------------------------- */
 
-/** ----------------------------------------Iphone---------------------------------------- **/
+/** -----------------------00----------------------Iphone---------------------------------------- **/
 
-/* ----------------------------------------------------------------------------------------------- */ /* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
 @media (max-width: 390px) {
   .products-page {
     width: 100%;
@@ -417,6 +430,17 @@
     flex-wrap: wrap;
     border-radius: 10px;
   }
+  .products-page
+    .product
+    .product-frame
+    .product-right
+    .card-box
+    .productBasket {
+    width: 20px;
+    height: 20px;
+    top: 60%;
+    left: 42%;
+  }
 
   .products-page .product .product-frame .product-right .card-box .box-txt {
     max-width: 150px;
@@ -453,7 +477,7 @@
 
 /** ----------------------------------------IPAD---------------------------------------- **/
 
-/* ----------------------------------------------------------------------------------------------- */ /* ----------------------------------------------------------------------------------------------- */
+/* ----------------------------------------------------------------------------------------------- */
 
 @media screen and (max-width: 665px) and (min-width: 391px) {
   .products-page .product .product-frame .product-left {
@@ -492,6 +516,18 @@
   .products-page .product .product-frame .product-right .card-box {
     margin-top: 20px;
     gap: 20px;
+  }
+
+  .products-page
+    .product
+    .product-frame
+    .product-right
+    .card-box
+    .productBasket {
+    width: 30px;
+    height: 30px;
+    top: 90%;
+    left: 42%;
   }
 }
 
@@ -561,6 +597,17 @@
     flex-direction: row;
     flex-wrap: wrap;
     border-radius: 10px;
+  }
+  .products-page
+    .product
+    .product-frame
+    .product-right
+    .card-box
+    .productBasket {
+    width: 30px;
+    height: 30px;
+    top: 90%;
+    left: 42%;
   }
   .products-page .product .product-frame .product-right .card-box .box-txt {
     max-width: 230px;
