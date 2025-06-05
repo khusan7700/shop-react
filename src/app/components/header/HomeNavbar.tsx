@@ -11,11 +11,21 @@ interface NavbarProps {
   onRemove: (item: CartItem) => void;
   onDelete: (item: CartItem) => void;
   onDeleteAll: () => void;
+  setSignupOpen: (isOpen: boolean) => void;
+  setLoginOpen: (isOpen: boolean) => void;
 }
 
 export default function HomeNavbar(props: NavbarProps) {
-  const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
-  const authMember = true;
+  const {
+    cartItems,
+    onAdd,
+    onRemove,
+    onDelete,
+    onDeleteAll,
+    setSignupOpen,
+    setLoginOpen,
+  } = props;
+  const authMember = null;
 
   return (
     <div className="home-navbar">
@@ -128,7 +138,11 @@ export default function HomeNavbar(props: NavbarProps) {
             <Box className="service-txt">24 hour service</Box>
             <Box className="signup">
               {!authMember ? (
-                <Button variant={"contained"} className="signup-button">
+                <Button
+                  variant={"contained"}
+                  className="signup-button"
+                  onClick={() => setSignupOpen(true)}
+                >
                   SIGN UP
                 </Button>
               ) : null}

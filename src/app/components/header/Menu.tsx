@@ -4,7 +4,7 @@ import { NavLink } from "react-router-dom";
 
 export function Menu() {
   const [isOpen, setIsOpen] = useState(false);
-  const authMember = true;
+  const authMember = null;
 
   const handleLinkClick = () => {
     setIsOpen(false); // Link bosilganda menyuni yopish
@@ -65,7 +65,7 @@ export function Menu() {
             <Button
               onClick={handleLinkClick}
               variant="contained"
-              style={{ background: "blue" }}
+              style={{ background: "blue", color: "white" }}
             >
               Login
             </Button>
