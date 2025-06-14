@@ -24,14 +24,7 @@ export default function HelpPage() {
   return (
     <div>
       <div className="user-page-line">
-        <Stack
-          component={motion.div}
-          initial={{ y: 50, opacity: 0 }}
-          whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 1 }}
-          viewport={{ amount: 0.4, once: true }}
-          className={"user-txt"}
-        >
+        <Stack className={"user-txt"}>
           <div className="txt">
             <span>Order Page</span>
           </div>

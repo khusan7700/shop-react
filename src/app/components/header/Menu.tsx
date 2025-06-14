@@ -1,10 +1,19 @@
 import { Button } from "@mui/material";
 import { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useGlobals } from "../../hooks/useGlobals";
 
-export function Menu() {
+interface NavbarProps {
+  setSignupOpen: (isOpen: boolean) => void;
+  setLoginOpen: (isOpen: boolean) => void;
+  handleLogoutRequest: () => void;
+}
+
+export function Menu(props: NavbarProps) {
+  const { setSignupOpen, setLoginOpen, handleLogoutRequest } = props;
+
   const [isOpen, setIsOpen] = useState(false);
-  const authMember = null;
+  const { authMember } = useGlobals();
 
   const handleLinkClick = () => {
     setIsOpen(false); // Link bosilganda menyuni yopish
@@ -61,9 +70,26 @@ export function Menu() {
           >
             Help
           </NavLink>
+          {authMember ? (
+            <NavLink
+              style={{ color: "red" }}
+              to={"/"}
+              className={({ isActive }) => (isActive ? "active" : "")}
+              onClick={() => {
+                handleLinkClick();
+                handleLogoutRequest();
+              }}
+            >
+              LOGOUT
+            </NavLink>
+          ) : null}
+
           {!authMember ? (
             <Button
-              onClick={handleLinkClick}
+              onClick={() => {
+                handleLinkClick(); // menyuni yopish
+                setLoginOpen(true); // login oynasini ochish
+              }}
               variant="contained"
               style={{ background: "blue", color: "white" }}
             >
