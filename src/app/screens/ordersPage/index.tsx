@@ -3,13 +3,65 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import TabContext from "@mui/lab/TabContext";
 import { motion } from "framer-motion";
-import { SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useEffect, useState } from "react";
 import PausedOrders from "./PausedOrders";
 import ProcessOrders from "./ProcessOrders";
 import FinishedOrders from "./FinishedOrders";
+import { useDispatch } from "react-redux";
+import { Dispatch } from "@reduxjs/toolkit";
+import { setPausedOrders, setProcessOrders, setFinishedOrders } from "./slice";
+import { Order, OrderInquiry } from "../../../lib/types/order";
+import OrderService from "../../services/OrderService";
+import { OrderStatus } from "../../../lib/enums/order.enum";
+
+/** REDUX SLICE & SELECTOR **/
+const actionDispatch = (dispatch: Dispatch) => ({
+  setPausedOrders: (data: Order[]) => dispatch(setPausedOrders(data)),
+  setProcessOrders: (data: Order[]) => dispatch(setProcessOrders(data)),
+  setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
+});
+//------------------------------------------------------------------------
 
 export default function OrdersPage() {
+  const { setPausedOrders, setProcessOrders, setFinishedOrders } =
+    actionDispatch(useDispatch());
   const [value, setValue] = useState("1");
+  const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
+    page: 1,
+    limit: 5,
+    orderStatus: OrderStatus.PAUSE,
+  });
+
+  useEffect(() => {
+    const order = new OrderService();
+
+    // get paused orders
+    order
+      .getMyOrders({
+        ...orderInquiry,
+        orderStatus: OrderStatus.PAUSE,
+      })
+      .then((data) => setPausedOrders(data))
+      .catch((err) => console.log(err));
+
+    // get process orders
+    order
+      .getMyOrders({
+        ...orderInquiry,
+        orderStatus: OrderStatus.PROCESS,
+      })
+      .then((data) => setProcessOrders(data))
+      .catch((err) => console.log(err));
+
+    // get finished orders
+    order
+      .getMyOrders({
+        ...orderInquiry,
+        orderStatus: OrderStatus.FINISH,
+      })
+      .then((data) => setFinishedOrders(data))
+      .catch((err) => console.log(err));
+  }, [orderInquiry]);
 
   const handleChange = (e: SyntheticEvent, newValue: string) => {
     setValue(newValue);
@@ -61,71 +113,6 @@ export default function OrdersPage() {
             </Stack>
           </TabContext>
         </Stack>
-
-        {/* <Stack className={"order-right"}>
-          <Stack className="member-box order-info-box">
-            <div className="order-user-img">
-              <img
-                src="/icons/default-user.svg"
-                alt="img"
-                width={50}
-                height={50}
-                className="order-user-avatar"
-              />
-              <div className="order-user-icon-box">
-                <img
-                  src="/icons/user-badge.svg"
-                  alt="img"
-                  width={50}
-                  height={50}
-                  className="order-user-prof-img"
-                />
-              </div>
-            </div>
-            <Box className="order-user-name">Justin</Box>
-            <Box className="order-user-prof">USER</Box>
-            <Box className="liner" />
-            <Stack className="order-user-address">
-              <LocationOnIcon />
-              <Box className="spec-address-text">South Korea, Busan</Box>
-            </Stack>
-          </Stack>
-
-          <Stack className="card-info order-info-box">
-            <Box className="card-input">Card Number: 5243 4090 2002 7495</Box>
-            <Stack className="card-half">
-              <Box className="card-half-input">07 / 24</Box>
-              <Box className="card-half-input">CVV: 010</Box>
-            </Stack>
-            <Box className="card-input">Justin Robertson</Box>
-            <Stack className="cards-box">
-              <img
-                src="/icons/western-card.svg"
-                width={50}
-                height={50}
-                alt="img"
-              ></img>
-              <img
-                src="/icons/master-card.svg"
-                width={50}
-                height={50}
-                alt="img"
-              ></img>
-              <img
-                src="/icons/paypal-card.svg"
-                width={50}
-                height={50}
-                alt="img"
-              ></img>
-              <img
-                src="/icons/visa-card.svg"
-                width={50}
-                height={50}
-                alt="img"
-              ></img>
-            </Stack>
-          </Stack>
-        </Stack> */}
       </Container>
     </div>
   );

@@ -157,6 +157,12 @@
   margin-left: 5px;
 }
 
+#mui-p-93245-P-1 {
+  width: auto;
+}
+
+/* ----------------------------IPHONE---------------------------------- */
+
 @media (max-width: 390px) {
   .order-page {
     width: 100%;
@@ -291,7 +297,7 @@
     display: flex;
   }
 }
-
+/* ----------------------------IPAD---------------------------------- */
 @media screen and (max-width: 765px) and (min-width: 391px) {
   .order-page {
     width: 100%;

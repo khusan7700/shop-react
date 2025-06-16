@@ -3,9 +3,28 @@ import { Stack, Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import TabPanel from "@mui/lab/TabPanel";
 import { motion } from "framer-motion";
+import { T } from "../../../lib/types/common";
+import { useSelector } from "react-redux";
+import { createSelector } from "@reduxjs/toolkit";
+import { retrieverPausedOrders } from "./selector";
+import { useGlobals } from "../../hooks/useGlobals";
+import { Order, OrderItem } from "../../../lib/types/order";
+import { Product } from "../../../lib/types/product";
+import { serverApi } from "../../../lib/config";
+
+/** Redux  */
+const pausedOrdersRetriever = createSelector(
+  retrieverPausedOrders,
+  (pausedOrders) => ({ pausedOrders })
+);
+
+interface PausedOrdersProps {
+  setValue: (input: string) => void;
+}
 
 export default function PausedOrders() {
-  const orders = [1, 2];
+  const { authMember, setOrderBuilder } = useGlobals();
+  const { pausedOrders } = useSelector(pausedOrdersRetriever);
 
   // todo --> when onclick payment button send to payment API
   // const navigate = useNavigate();
@@ -17,10 +36,10 @@ export default function PausedOrders() {
     <TabPanel value="1">
       <Stack>
         {/* number of orders */}
-        {orders.map((ele, index) => {
+        {pausedOrders.map((order: Order) => {
           return (
             <Box
-              key={index}
+              key={order._id}
               component={motion.div}
               initial={{ y: 50, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
@@ -29,37 +48,42 @@ export default function PausedOrders() {
               className="order-main-box"
             >
               <Box className="order-box-scroll">
-                {/* number of items in each order */}
-                {[1, 2, 3].map((ele2, index2) => {
+                {order?.orderItems?.map((item: OrderItem) => {
+                  const product: Product = order.productData.filter(
+                    (ele: Product) => item.productId === ele._id
+                  )[0];
+                  const imagePath = `${serverApi}/${product.productImages[0]}`;
                   return (
-                    <Box key={index2} className="orders-name-price">
+                    <Box key={item._id} className="orders-name-price">
                       <Stack className="order-dish-class">
                         <img
-                          src="img/lavash.webp"
+                          src={imagePath}
                           width={50}
                           height={50}
                           style={{ borderRadius: "50%" }}
                           className="order-dish-img"
                           alt="img"
                         />
-                        <p className="title-dish">Lavash</p>
+                        <p className="title-dish">{product.productName}</p>
                       </Stack>
                       <Stack className="price-box">
-                        <p>$10</p>
+                        <p>${item.itemPrice}</p>
                         <img
                           src="/icons/close.svg"
                           width={50}
                           height={50}
                           alt="img"
                         />
-                        <p>2</p>
+                        <p>{item.itemQuantity}</p>
                         <img
                           src="/icons/pause.svg"
                           width={50}
                           height={50}
                           alt="img"
                         />
-                        <p style={{ marginLeft: "15px" }}>$20</p>
+                        <p style={{ marginLeft: "15px" }}>
+                          ${item.itemQuantity * item.itemPrice}
+                        </p>
                       </Stack>
                     </Box>
                   );
@@ -69,17 +93,17 @@ export default function PausedOrders() {
               <Box className="total-price-box">
                 <Box className="box-total">
                   <p>Product price</p>
-                  <p>$60</p>
+                  <p>${order.orderTotal - order.orderDelivery}</p>
                   <img src="/icons/plus.svg" alt="img" />
                   <p> Delivery cost</p>
-                  <p>$5</p>
+                  <p>${order.orderDelivery}</p>
                   <img
                     src="/icons/pause.svg"
                     alt="img"
                     style={{ marginLeft: "20px" }}
                   />
                   <p>Total</p>
-                  <p>$65</p>
+                  <p>${order.orderTotal}</p>
                 </Box>
                 <div className="btn">
                   <Button
@@ -99,15 +123,20 @@ export default function PausedOrders() {
           );
         })}
 
-        {orders.length <= 0 && (
-          <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
-            <img
-              src="/icons/noimage-list.svg"
-              alt="img"
-              style={{ width: 300, height: 300 }}
-            />
-          </Box>
-        )}
+        {!pausedOrders ||
+          (pausedOrders.length === 0 && (
+            <Box
+              display={"flex"}
+              flexDirection={"row"}
+              justifyContent={"center"}
+            >
+              <img
+                src="/icons/noimage-list.svg"
+                alt="img"
+                style={{ width: 300, height: 300 }}
+              />
+            </Box>
+          ))}
       </Stack>
     </TabPanel>
   );

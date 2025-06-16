@@ -6,8 +6,13 @@ import Menu from "@mui/material/Menu";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { CartItem } from "../../../lib/types/search";
-import { serverApi } from "../../../lib/config";
+import { Messages, serverApi } from "../../../lib/config";
 import RestoreFromTrashIcon from "@mui/icons-material/RestoreFromTrash";
+import { useGlobals } from "../../hooks/useGlobals";
+import OrderService from "../../services/OrderService";
+import { sweetErrorHandling } from "../../../lib/sweetAlert";
+// import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface BasketProps {
   cartItems: CartItem[];
@@ -19,6 +24,7 @@ interface BasketProps {
 
 export default function Basket(props: BasketProps) {
   const { cartItems, onAdd, onRemove, onDelete, onDeleteAll } = props;
+  const { authMember } = useGlobals();
   const itemsPrice: number = cartItems.reduce(
     (a: number, c: CartItem) => a + c.quantity * c.price,
     0
@@ -27,6 +33,8 @@ export default function Basket(props: BasketProps) {
   const totalPrice = (itemsPrice + shippingCost).toFixed(1);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  // const history = useHistory();
+  const navigate = useNavigate();
 
   /** HANDLERS **/
   const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -36,6 +44,25 @@ export default function Basket(props: BasketProps) {
     setAnchorEl(null);
   };
 
+  const proceedOrderHandler = async () => {
+    try {
+      handleClose(); // basket avval close bo'ladi
+      if (!authMember) throw Error(Messages.error2);
+
+      const order = new OrderService();
+      await order.createOrder(cartItems);
+
+      onDeleteAll(); // basket productlardan tozalanadi
+
+      // REFRESH VIA CONTEXT
+      setOrderBuilder(new Date()); // refresh order page
+      // history.push("/orders");
+      navigate("/orders");
+    } catch (err) {
+      console.log(err);
+      sweetErrorHandling(err).then();
+    }
+  };
   return (
     <Box className={"hover-line"}>
       <IconButton
@@ -136,7 +163,7 @@ export default function Basket(props: BasketProps) {
                           className="remove"
                         >
                           -
-                        </button>{" "}
+                        </button>
                         <button onClick={() => onAdd(item)} className="add">
                           +
                         </button>
@@ -152,7 +179,11 @@ export default function Basket(props: BasketProps) {
               <span className={"price"}>
                 Total: ${totalPrice} ({itemsPrice} + {shippingCost})
               </span>
-              <Button startIcon={<ShoppingCartIcon />} variant={"contained"}>
+              <Button
+                startIcon={<ShoppingCartIcon />}
+                variant={"contained"}
+                onClick={proceedOrderHandler}
+              >
                 Order
               </Button>
             </Box>
@@ -163,4 +194,7 @@ export default function Basket(props: BasketProps) {
       </Menu>
     </Box>
   );
+}
+function setOrderBuilder(arg0: Date) {
+  throw new Error("Function not implemented.");
 }
