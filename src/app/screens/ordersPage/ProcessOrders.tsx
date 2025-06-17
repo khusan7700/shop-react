@@ -3,9 +3,32 @@ import { Stack, Box } from "@mui/material";
 import Button from "@mui/material/Button";
 import TabPanel from "@mui/lab/TabPanel";
 import { motion } from "framer-motion";
+import { useSelector } from "react-redux";
+import { createSelector } from "@reduxjs/toolkit";
+import { useGlobals } from "../../hooks/useGlobals";
+import { retrieverProcessedOrders } from "./selector";
+import { Order, OrderItem, OrderUpdateInput } from "../../../lib/types/order";
+import { Messages, serverApi } from "../../../lib/config";
+import { Product } from "../../../lib/types/product";
+import { OrderStatus } from "../../../lib/enums/order.enum";
+import OrderService from "../../services/OrderService";
+import { sweetErrorHandling } from "../../../lib/sweetAlert";
+import { T } from "../../../lib/types/common";
 
-export default function ProcessOrders() {
-  const orders = [1, 2];
+interface ProcessOrdersProps {
+  setValue: (input: string) => void;
+}
+
+/** Redux  */
+const processOrdersRetriever = createSelector(
+  retrieverProcessedOrders,
+  (processOrders) => ({ processOrders })
+);
+
+export default function ProcessOrders(props: ProcessOrdersProps) {
+  const { setValue } = props;
+  const { processOrders } = useSelector(processOrdersRetriever);
+  const { authMember, setOrderBuilder } = useGlobals();
 
   // todo --> when onclick payment button send to payment API
   // const navigate = useNavigate();
@@ -13,14 +36,39 @@ export default function ProcessOrders() {
   //   navigate("/payment");
   // };
 
+  /** HANDLER **/
+
+  const finishOrderHandler = async (e: T) => {
+    try {
+      if (!authMember) throw Error(Messages.error2);
+
+      const orderId = e.target.value;
+      const input: OrderUpdateInput = {
+        orderId: orderId,
+        orderStatus: OrderStatus.FINISH,
+      };
+
+      const confirmation = window.confirm("Have you received your order?");
+      if (confirmation) {
+        const order = new OrderService();
+        await order.updateOrder(input);
+        setValue("3");
+        setOrderBuilder(new Date());
+      }
+    } catch (err) {
+      console.log(err);
+      sweetErrorHandling(err).then();
+    }
+  };
+
   return (
     <TabPanel value="2">
       <Stack>
         {/* number of orders */}
-        {orders.map((ele, index) => {
+        {processOrders.map((order: Order) => {
           return (
             <Box
-              key={index}
+              key={order._id}
               className="order-main-box"
               component={motion.div}
               initial={{ y: 50, opacity: 0 }}
@@ -29,37 +77,42 @@ export default function ProcessOrders() {
               viewport={{ amount: 0.4, once: true }}
             >
               <Box className="order-box-scroll">
-                {/* number of items in each order */}
-                {[1, 2, 3].map((ele2, index2) => {
+                {order?.orderItems?.map((item: OrderItem) => {
+                  const product: Product = order.productData.filter(
+                    (ele: Product) => item.productId === ele._id
+                  )[0];
+                  const imagePath = `${serverApi}/${product.productImages[0]}`;
                   return (
-                    <Box key={index2} className="orders-name-price">
+                    <Box key={item._id} className="orders-name-price">
                       <Stack className="order-dish-class">
                         <img
-                          src="img/lavash.webp"
+                          src={imagePath}
                           width={50}
                           height={50}
                           style={{ borderRadius: "50%" }}
                           className="order-dish-img"
                           alt="img"
                         />
-                        <p className="title-dish">Lavash</p>
+                        <p className="title-dish">{product.productName}</p>
                       </Stack>
                       <Stack className="price-box">
-                        <p>$10</p>
+                        <p>${item.itemPrice}</p>
                         <img
                           src="/icons/close.svg"
                           width={50}
                           height={50}
                           alt="img"
                         />
-                        <p>2</p>
+                        <p>{item.itemQuantity}</p>
                         <img
                           src="/icons/pause.svg"
                           width={50}
                           height={50}
                           alt="img"
                         />
-                        <p style={{ marginLeft: "15px" }}>$20</p>
+                        <p style={{ marginLeft: "15px" }}>
+                          ${item.itemQuantity * item.itemPrice}
+                        </p>
                       </Stack>
                     </Box>
                   );
@@ -69,30 +122,27 @@ export default function ProcessOrders() {
               <Box className="total-price-box">
                 <Box className="box-total">
                   <p>Product price</p>
-                  <p>$60</p>
+                  <p>${order.orderTotal - order.orderDelivery}</p>
                   <img src="/icons/plus.svg" alt="img" />
                   <p> Delivery cost</p>
-                  <p>$5</p>
+                  <p>${order.orderDelivery}</p>
                   <img
                     src="/icons/pause.svg"
                     alt="img"
                     style={{ marginLeft: "20px" }}
                   />
                   <p>Total</p>
-                  <p>$65</p>
+                  <p>${order.orderTotal}</p>
                 </Box>
 
                 <div className="btn">
                   <Button
+                    value={order._id}
                     variant="contained"
-                    color="secondary"
-                    className={"cancel-button"}
+                    className="pay-button"
+                    onClick={finishOrderHandler}
                   >
-                    Cancel
-                  </Button>
-
-                  <Button variant="contained" className="pay-button">
-                    Payment
+                    OK
                   </Button>
                 </div>
               </Box>
@@ -100,15 +150,20 @@ export default function ProcessOrders() {
           );
         })}
 
-        {orders.length <= 0 && (
-          <Box display={"flex"} flexDirection={"row"} justifyContent={"center"}>
-            <img
-              src="/icons/noimage-list.svg"
-              alt="img"
-              style={{ width: 300, height: 300 }}
-            />
-          </Box>
-        )}
+        {!processOrders ||
+          (processOrders.length <= 0 && (
+            <Box
+              display={"flex"}
+              flexDirection={"row"}
+              justifyContent={"center"}
+            >
+              <img
+                src="/icons/noimage-list.svg"
+                alt="img"
+                style={{ width: 300, height: 300 }}
+              />
+            </Box>
+          ))}
       </Stack>
     </TabPanel>
   );
