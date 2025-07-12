@@ -13,6 +13,7 @@ import { Order, OrderInquiry } from "../../../lib/types/order";
 import OrderService from "../../services/OrderService";
 import { OrderStatus } from "../../../lib/enums/order.enum";
 import { useGlobals } from "../../hooks/useGlobals";
+// import { useHistory } from "react-router-dom";
 
 /** REDUX SLICE & SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
@@ -26,17 +27,16 @@ export default function OrdersPage() {
   const { setPausedOrders, setProcessOrders, setFinishedOrders } =
     actionDispatch(useDispatch());
   const [value, setValue] = useState("1");
-  const { orderBuilder } = useGlobals();
+  const { orderBuilder, authMember } = useGlobals();
   const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
     page: 1,
     limit: 5,
     orderStatus: OrderStatus.PAUSE,
   });
+  // const history = useHistory();
 
   useEffect(() => {
     const order = new OrderService();
-
-    // get paused orders
     order
       .getMyOrders({
         ...orderInquiry,
@@ -44,8 +44,6 @@ export default function OrdersPage() {
       })
       .then((data) => setPausedOrders(data))
       .catch((err) => console.log(err));
-
-    // get process orders
     order
       .getMyOrders({
         ...orderInquiry,
@@ -53,8 +51,6 @@ export default function OrdersPage() {
       })
       .then((data) => setProcessOrders(data))
       .catch((err) => console.log(err));
-
-    // get finished orders
     order
       .getMyOrders({
         ...orderInquiry,
@@ -68,6 +64,7 @@ export default function OrdersPage() {
     setValue(newValue);
   };
 
+  // if (!authMember) history.push("/");
   return (
     <div className="order-page">
       <Stack className="order-txt">

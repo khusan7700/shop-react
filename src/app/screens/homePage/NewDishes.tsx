@@ -14,6 +14,8 @@ import { retrieveNewDishes } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
+import { T } from "../../../lib/types/common";
+import { useNavigate } from "react-router-dom";
 
 /** REDUX SLICE & SELECTOR **/
 const newDishesRetriever = createSelector(retrieveNewDishes, (newDishes) => ({
@@ -22,6 +24,7 @@ const newDishesRetriever = createSelector(retrieveNewDishes, (newDishes) => ({
 
 export default function NewDishes() {
   const { newDishes } = useSelector(newDishesRetriever);
+  const navigate = useNavigate();
 
   console.log("newDishes------->", newDishes);
 
@@ -53,7 +56,16 @@ export default function NewDishes() {
                       <CardOverflow>
                         <div className={"product-sale"}>{sizeVolume}</div>
                         <AspectRatio ratio="1">
-                          <img src={imagePath} alt="img" />
+                          <img
+                            src={imagePath}
+                            alt="img"
+                            onClick={(
+                              e: React.MouseEvent<HTMLImageElement>
+                            ) => {
+                              e.preventDefault(); // ixtiyoriy
+                              navigate(`/product`);
+                            }}
+                          />
                         </AspectRatio>
                       </CardOverflow>
 

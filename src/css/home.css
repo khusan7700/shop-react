@@ -29,6 +29,12 @@
   min-height: 430px;
   min-width: 300;
   cursor: pointer;
+  width: 250px;
+  height: 150px;
+  object-fit: cover; /* Rasmni kesmay, konteynerga to‘ldirish */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Engil soyali effekt */
+  transition: transform 0.3s ease; /* Hover effekti uchun animatsiya */
+  cursor: pointer;
 }
 
 .home-page .popular-dishes-frame .cards-frame .card .card-cover {

@@ -14,7 +14,7 @@ export default function ProductsPage(props: ProductsPageProps) {
     <div className="products-page">
       <Routes>
         <Route path="" element={<Products onAdd={onAdd} />} />
-        <Route path=":productId" element={<ChosenProduct onAdd={onAdd} />} />
+        <Route path="/product/:id" element={<ChosenProduct onAdd={onAdd} />} />
       </Routes>
     </div>
   );

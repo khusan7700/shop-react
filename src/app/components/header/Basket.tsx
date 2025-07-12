@@ -52,7 +52,7 @@ export default function Basket(props: BasketProps) {
       const order = new OrderService();
       await order.createOrder(cartItems);
 
-      onDeleteAll(); // basket productlardan tozalanadi
+      onDeleteAll();
 
       // REFRESH VIA CONTEXT
       setOrderBuilder(new Date()); // refresh order page
@@ -142,6 +142,7 @@ export default function Basket(props: BasketProps) {
           <Box className={"orders-main-wrapper"}>
             <Box className={"orders-wrapper"}>
               {cartItems.map((item: CartItem) => {
+                console.log("--------------->", cartItems);
                 const imagePath = `${serverApi}/${item.image}`;
                 return (
                   <Box className={"basket-info-box"} key={item._id}>

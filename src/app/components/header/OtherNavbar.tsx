@@ -106,13 +106,16 @@ export default function OtherNavbar(props: OtherNavbarProps) {
                 Help
               </NavLink>
             </Box>
-            <Basket
-              cartItems={cartItems}
-              onRemove={onRemove}
-              onAdd={onAdd}
-              onDelete={onDelete}
-              onDeleteAll={onDeleteAll}
-            />
+            {authMember ? (
+              <Basket
+                cartItems={cartItems}
+                onRemove={onRemove}
+                onAdd={onAdd}
+                onDelete={onDelete}
+                onDeleteAll={onDeleteAll}
+              />
+            ) : null}
+
             {!authMember ? (
               <Box>
                 <Button

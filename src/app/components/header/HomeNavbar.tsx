@@ -106,13 +106,15 @@ export default function HomeNavbar(props: NavbarProps) {
                 Help
               </NavLink>
             </Box>
-            <Basket
-              cartItems={cartItems}
-              onRemove={onRemove}
-              onAdd={onAdd}
-              onDelete={onDelete}
-              onDeleteAll={onDeleteAll}
-            />
+            {authMember ? (
+              <Basket
+                cartItems={cartItems}
+                onRemove={onRemove}
+                onAdd={onAdd}
+                onDelete={onDelete}
+                onDeleteAll={onDeleteAll}
+              />
+            ) : null}
             {!authMember ? (
               <Box>
                 <Button

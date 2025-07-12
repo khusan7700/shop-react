@@ -86,7 +86,7 @@ export default function Products(props: ProductsProps) {
   };
 
   const choosenDishHandler = (id: string) => {
-    navigate(`/products/${id}`);
+    navigate(`/product/${id}`);
   };
 
   return (
@@ -137,7 +137,7 @@ export default function Products(props: ProductsProps) {
               }
               onClick={() => serachCollectionHandler(ProductCollection.DESSERT)}
             >
-              Cake
+              Dessert
             </Button>
             <Button
               variant="contained"
@@ -148,7 +148,7 @@ export default function Products(props: ProductsProps) {
               }
               onClick={() => serachCollectionHandler(ProductCollection.DRINK)}
             >
-              Set
+              Drink
             </Button>
             <Button
               variant="contained"
@@ -166,6 +166,7 @@ export default function Products(props: ProductsProps) {
               className={"custom-input"}
               placeholder="search product....."
               name={"singleResearch"}
+              style={{ color: "blue" }}
               value={searchText}
               onChange={(e) => setSearchText(e.target.value)}
               onKeyDown={(e) => {
@@ -233,11 +234,7 @@ export default function Products(props: ProductsProps) {
                       : product.productSize + "size";
                   return (
                     <Box className="card">
-                      <Stack
-                        key={product._id}
-                        className="box"
-                        onClick={() => choosenDishHandler(product._id)}
-                      >
+                      <Stack key={product._id} className="box">
                         <AddShoppingCartIcon
                           className={"productBasket"}
                           onClick={(e) => {

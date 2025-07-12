@@ -16,6 +16,7 @@ import { retrievePopularDishes } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
+import { useNavigate } from "react-router-dom";
 
 /** REDUX SLICE & SELECTOR **/
 const popularDishesRetriever = createSelector(
@@ -25,6 +26,7 @@ const popularDishesRetriever = createSelector(
 
 export default function PopularDishes() {
   const { popularDishes } = useSelector(popularDishesRetriever);
+  const navigate = useNavigate();
 
   return (
     <div className={"popular-dishes-frame"}>
@@ -44,9 +46,13 @@ export default function PopularDishes() {
                       transition={{ duration: 0.7, delay: 0.2 }}
                       viewport={{ amount: 0.4, once: true }}
                       className={"card"}
+                      onClick={(e: React.MouseEvent<HTMLImageElement>) => {
+                        e.preventDefault(); // ixtiyoriy
+                        navigate(`/product`);
+                      }}
                     >
                       <CardCover>
-                        <img src={imagePath} alt="rasm" />
+                        <img className="photo" src={imagePath} alt="rasm" />
                       </CardCover>
                       <CardCover className={"card-cover"} />
                       <CardContent sx={{ justifyContent: "flex-end" }}>

@@ -79,6 +79,11 @@
   flex-direction: row;
   flex-wrap: wrap;
   border-radius: 10px;
+
+  object-fit: cover; /* Rasmni kesmay, konteynerga to‘ldirish */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Engil soyali effekt */
+  transition: transform 0.3s ease; /* Hover effekti uchun animatsiya */
+  cursor: pointer;
 }
 
 .products-page .product .product-frame .product-right .card-box .productBasket {
@@ -111,11 +116,15 @@
 }
 
 .products-page .product .product-frame .product-right .card-box .card .box img {
-  width: 250px;
-  height: 250px;
   object-fit: cover; /* Rasm nisbatini saqlab, joyga mos kelishi uchun */
   border-radius: 5px;
   transition: filter 0.3s ease; /* Hover effekti uchun animatsiya */
+  width: 250px;
+  height: 150px;
+  object-fit: cover; /* Rasmni kesmay, konteynerga to‘ldirish */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Engil soyali effekt */
+  transition: transform 0.3s ease; /* Hover effekti uchun animatsiya */
+  cursor: pointer;
 }
 
 .products-page
@@ -351,7 +360,7 @@
 
 /* ----------------------------------------------------------------------------------------------- */
 
-/** -----------------------00----------------------Iphone---------------------------------------- **/
+/** ---------------------------------------------Iphone---------------------------------------- **/
 
 /* ----------------------------------------------------------------------------------------------- */
 @media (max-width: 390px) {
@@ -436,8 +445,8 @@
     .product-right
     .card-box
     .productBasket {
-    width: 20px;
-    height: 20px;
+    width: 30px;
+    height: 30px;
     top: 60%;
     left: 42%;
   }
