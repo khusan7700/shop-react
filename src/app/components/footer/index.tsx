@@ -20,10 +20,10 @@ export default function Footer() {
       <Container>
         <div className={"fopter-frame"}>
           <div className="foter-txt">
-            <Stack className={"year-txt"}>2024 MIT. All Rights Reserved.</Stack>
+            <Stack className={"year-txt"}>2025 MIT. All Rights Reserved.</Stack>
           </div>
           <div className="foter-tel">
-            <span>TEL: 010 7777 7777</span>
+            <span>TEL: 010 7730 7215</span>
             <span>MAIL: khusan7700@gmail.com</span>
             <div className="footer-sns">
               <FacebookIcon className="icons" />
