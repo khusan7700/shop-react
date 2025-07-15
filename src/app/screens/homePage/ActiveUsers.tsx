@@ -31,7 +31,10 @@ export default function ActiveUsers() {
             <CssVarsProvider>
               {topUsers.length !== 0 ? (
                 topUsers.map((member: Member) => {
-                  const imagePath = `${serverApi}/${member.memberImage}`;
+                  const imagePath =
+                    member.memberImage && member.memberImage.trim() !== ""
+                      ? `${serverApi}/${member.memberImage}`
+                      : "/default-user-img.jpg";
                   return (
                     <Card
                       component={motion.div}

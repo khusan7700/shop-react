@@ -78,12 +78,15 @@ export default function NewDishes() {
                             <Typography className={"price"}>
                               ${product.productPrice}
                             </Typography>
-                            <Typography className={"views"}>
+                            {/* <Typography className={"views"}>
                               {product.productViews}
                               <VisibilityIcon
-                                sx={{ FormatSize: 20, marginLeft: "5px" }}
+                                sx={{
+                                  FormatSize: 20,
+                                  marginLeft: "5px",
+                                }}
                               />
-                            </Typography>
+                            </Typography> */}
                           </Stack>
                         </Stack>
                       </CardOverflow>

@@ -449,3 +449,14 @@
     font-weight: 700;
   }
 }
+
+@media screen and (max-width: 1300px) and (min-width: 865px) {
+  .home-page .new-products-frame .product-detail .title {
+    width: 100px;
+    font-weight: 500;
+    display: flex;
+    justify-content: end;
+    text-align: center;
+    padding-left: 10px;
+  }
+}

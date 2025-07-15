@@ -79,9 +79,10 @@
 }
 
 .home-navbar .navbar-container .header-frame .detail {
-  width: 390px;
+  width: 350px;
   display: flex;
   flex-direction: column;
+  border: 1px solid red;
 }
 
 .home-navbar .navbar-container .header-frame .detail .head-main-txt {
@@ -375,10 +376,9 @@
     font-size: 14px;
   }
   .home-navbar .navbar-container .header-frame .detail .wel-txt {
-    width: 390px;
+    width: 350px;
     height: 42px;
     margin-top: 30px;
-    font-size: 36px;
   }
 
   .home-navbar .navbar-container .header-frame .detail .head-main-txt {
@@ -392,8 +392,8 @@
   }
 
   .home-navbar .navbar-container .header-frame .detail .wel-txt {
+    width: 350px;
     font-size: 25px;
-    width: 370px;
   }
 
   .other-navbar .navbar-container .header-frame .detail {
