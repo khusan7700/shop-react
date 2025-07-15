@@ -82,7 +82,6 @@
   width: 350px;
   display: flex;
   flex-direction: column;
-  border: 1px solid red;
 }
 
 .home-navbar .navbar-container .header-frame .detail .head-main-txt {
