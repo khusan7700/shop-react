@@ -9,114 +9,85 @@ import { Order, OrderItem } from "../../../lib/types/order";
 import { Product } from "../../../lib/types/product";
 import { serverApi } from "../../../lib/config";
 
-/** Redux  */
 const finishedOrdersRetriever = createSelector(
   retrieverFinishedOrders,
-  (finishedOrders) => ({ finishedOrders })
+  (finishedOrders) => ({ finishedOrders }),
 );
 
 export default function FinishedOrders() {
   const { finishedOrders } = useSelector(finishedOrdersRetriever);
-  const orders = [1, 2];
-
-  // todo --> when onclick payment button send to payment API
-  // const navigate = useNavigate();
-  // const handlePayment = () => {
-  //   navigate("/payment");
-  // };
 
   return (
-    <TabPanel value="3">
-      <Stack>
-        {/* number of orders */}
-        {finishedOrders.map((order: Order) => {
-          return (
-            <Box
-              key={order._id}
-              className="order-main-box"
-              component={motion.div}
-              initial={{ y: 50, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1 }}
-              viewport={{ amount: 0.4, once: true }}
-            >
-              <Box className="order-box-scroll">
-                {order?.orderItems?.map((item: OrderItem) => {
-                  const product: Product = order.productData.filter(
-                    (ele: Product) => item.productId === ele._id
-                  )[0];
-                  const imagePath = `${serverApi}/${product.productImages[0]}`;
-                  return (
-                    <Box key={item._id} className="orders-name-price">
-                      <Stack className="order-dish-class">
-                        <img
-                          src={imagePath}
-                          width={50}
-                          height={50}
-                          style={{ borderRadius: "50%" }}
-                          className="order-dish-img"
-                          alt="img"
-                        />
-                        <p className="title-dish">{product.productName}</p>
-                      </Stack>
-                      <Stack className="price-box">
-                        <p>${item.itemPrice}</p>
-                        <img
-                          src="/icons/close.svg"
-                          width={50}
-                          height={50}
-                          alt="img"
-                        />
-                        <p>{item.itemQuantity}</p>
-                        <img
-                          src="/icons/pause.svg"
-                          width={50}
-                          height={50}
-                          alt="img"
-                        />
-                        <p style={{ marginLeft: "15px" }}>
-                          ${item.itemQuantity * item.itemPrice}
-                        </p>
-                      </Stack>
-                    </Box>
-                  );
-                })}
-              </Box>
+    <TabPanel value="3" style={{ padding: 0 }}>
+      <Stack gap="16px">
+        {finishedOrders.map((order: Order) => (
+          <Box
+            key={order._id}
+            className="order-card"
+            component={motion.div}
+            initial={{ y: 30, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ amount: 0.2, once: true }}
+          >
+            <div className="order-card-status finished">
+              <span className="ocs-dot" />
+              Completed
+            </div>
 
-              <Box className="total-price-box">
-                <Box className="box-total">
-                  <p>Product price</p>
-                  <p>${order.orderTotal - order.orderDelivery}</p>
-                  <img src="/icons/plus.svg" alt="img" />
-                  <p> Delivery cost</p>
-                  <p>${order.orderDelivery}</p>
-                  <img
-                    src="/icons/pause.svg"
-                    alt="img"
-                    style={{ marginLeft: "20px" }}
-                  />
-                  <p>Total</p>
-                  <p>${order.orderTotal}</p>
-                </Box>
-              </Box>
-            </Box>
-          );
-        })}
+            <div className="order-items-list">
+              {order?.orderItems?.map((item: OrderItem) => {
+                const product: Product = order.productData.filter(
+                  (ele: Product) => item.productId === ele._id,
+                )[0];
+                const imagePath = `${serverApi}/${product.productImages[0]}`;
+                return (
+                  <div key={item._id} className="order-item-row">
+                    <div className="oir-left">
+                      <img
+                        src={imagePath}
+                        alt={product.productName}
+                        className="oir-img"
+                      />
+                      <span className="oir-name">{product.productName}</span>
+                    </div>
+                    <div className="oir-right">
+                      <span className="oir-unit">${item.itemPrice}</span>
+                      <span className="oir-sep">×</span>
+                      <span className="oir-qty">{item.itemQuantity}</span>
+                      <span className="oir-sep">=</span>
+                      <span className="oir-total">
+                        ${item.itemQuantity * item.itemPrice}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
 
-        {!finishedOrders ||
-          (finishedOrders.length === 0 && (
-            <Box
-              display={"flex"}
-              flexDirection={"row"}
-              justifyContent={"center"}
-            >
-              <img
-                src="/icons/noimage-list.svg"
-                alt="img"
-                style={{ width: 300, height: 300 }}
-              />
-            </Box>
-          ))}
+            <div className="order-card-footer">
+              <div className="ocf-summary">
+                <span className="ocf-label">Items</span>
+                <span className="ocf-val">
+                  ${order.orderTotal - order.orderDelivery}
+                </span>
+                <span className="ocf-plus">+</span>
+                <span className="ocf-label">Delivery</span>
+                <span className="ocf-val">${order.orderDelivery}</span>
+                <span className="ocf-plus">=</span>
+                <span className="ocf-grand">${order.orderTotal}</span>
+              </div>
+            </div>
+          </Box>
+        ))}
+
+        {finishedOrders.length === 0 && (
+          <div className="order-empty">
+            <div className="order-empty-icon">✅</div>
+            <p className="order-empty-title">No completed orders</p>
+            <p className="order-empty-sub">Finished orders will appear here</p>
+          </div>
+        )}
       </Stack>
     </TabPanel>
   );

@@ -13,49 +13,36 @@ import { Order, OrderInquiry } from "../../../lib/types/order";
 import OrderService from "../../services/OrderService";
 import { OrderStatus } from "../../../lib/enums/order.enum";
 import { useGlobals } from "../../hooks/useGlobals";
-// import { useHistory } from "react-router-dom";
 
-/** REDUX SLICE & SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
   setPausedOrders: (data: Order[]) => dispatch(setPausedOrders(data)),
   setProcessOrders: (data: Order[]) => dispatch(setProcessOrders(data)),
   setFinishedOrders: (data: Order[]) => dispatch(setFinishedOrders(data)),
 });
-//------------------------------------------------------------------------
 
 export default function OrdersPage() {
   const { setPausedOrders, setProcessOrders, setFinishedOrders } =
     actionDispatch(useDispatch());
   const [value, setValue] = useState("1");
   const { orderBuilder, authMember } = useGlobals();
-  const [orderInquiry, setOrderInquiry] = useState<OrderInquiry>({
+  const [orderInquiry] = useState<OrderInquiry>({
     page: 1,
     limit: 5,
     orderStatus: OrderStatus.PAUSE,
   });
-  // const history = useHistory();
 
   useEffect(() => {
     const order = new OrderService();
     order
-      .getMyOrders({
-        ...orderInquiry,
-        orderStatus: OrderStatus.PAUSE,
-      })
+      .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PAUSE })
       .then((data) => setPausedOrders(data))
       .catch((err) => console.log(err));
     order
-      .getMyOrders({
-        ...orderInquiry,
-        orderStatus: OrderStatus.PROCESS,
-      })
+      .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.PROCESS })
       .then((data) => setProcessOrders(data))
       .catch((err) => console.log(err));
     order
-      .getMyOrders({
-        ...orderInquiry,
-        orderStatus: OrderStatus.FINISH,
-      })
+      .getMyOrders({ ...orderInquiry, orderStatus: OrderStatus.FINISH })
       .then((data) => setFinishedOrders(data))
       .catch((err) => console.log(err));
   }, [orderInquiry, orderBuilder]);
@@ -64,54 +51,77 @@ export default function OrdersPage() {
     setValue(newValue);
   };
 
-  // if (!authMember) history.push("/");
   return (
     <div className="order-page">
-      <Stack className="order-txt">
-        <div className="txt">
-          <span>Order Page</span>
-        </div>
-      </Stack>
+      {/* Hero */}
+      <div className="order-hero">
+        <div className="order-hero-bg" />
+        <div className="order-hero-blob ob1" />
+        <div className="order-hero-blob ob2" />
+        <Container>
+          <div className="order-hero-content">
+            <span className="order-hero-eyebrow">🛍️ My Orders</span>
+            <h1 className="order-hero-title">Order History</h1>
+            <p className="order-hero-sub">Track and manage all your orders</p>
+          </div>
+        </Container>
+      </div>
 
-      <Container>
-        <Stack className={"order-left"}>
-          <TabContext value={value}>
-            <Box className={"order-nav-frame"}>
-              <Box>
+      {/* Body */}
+      <div className="order-body">
+        <Container>
+          <Stack className="order-left">
+            <TabContext value={value}>
+              {/* Tab navigation */}
+              <div className="order-tabs-wrap">
                 <Tabs
                   value={value}
                   onChange={handleChange}
-                  aria-label="basic tabs example"
-                  className={"table_list"}
+                  className="order-tabs"
+                  TabIndicatorProps={{ style: { display: "none" } }}
                 >
                   <Tab
-                    label="PAUSED ORDERS"
-                    value={"1"}
-                    sx={{
-                      color: "white",
-                    }}
+                    label={
+                      <span className="tab-label-wrap">
+                        <span className="tab-dot paused" />
+                        Paused
+                      </span>
+                    }
+                    value="1"
+                    className="order-tab"
                   />
                   <Tab
-                    label="PROCESS ORDERS"
-                    value={"2"}
-                    sx={{ color: "white" }}
+                    label={
+                      <span className="tab-label-wrap">
+                        <span className="tab-dot processing" />
+                        Processing
+                      </span>
+                    }
+                    value="2"
+                    className="order-tab"
                   />
                   <Tab
-                    label="FINISHED ORDERS"
-                    value={"3"}
-                    sx={{ color: "white" }}
+                    label={
+                      <span className="tab-label-wrap">
+                        <span className="tab-dot finished" />
+                        Finished
+                      </span>
+                    }
+                    value="3"
+                    className="order-tab"
                   />
                 </Tabs>
-              </Box>
-            </Box>
-            <Stack className={"order-main-content"}>
-              <PausedOrders setValue={setValue} />
-              <ProcessOrders setValue={setValue} />
-              <FinishedOrders />
-            </Stack>
-          </TabContext>
-        </Stack>
-      </Container>
+              </div>
+
+              <Stack className="order-main-content">
+                <PausedOrders setValue={setValue} />
+                <ProcessOrders setValue={setValue} />
+                <FinishedOrders />
+              </Stack>
+            </TabContext>
+          </Stack>
+        </Container>
+      </div>
     </div>
   );
 }

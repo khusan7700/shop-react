@@ -15,10 +15,9 @@ import { T } from "../../../lib/types/common";
 import { OrderStatus } from "../../../lib/enums/order.enum";
 import { sweetErrorHandling } from "../../../lib/sweetAlert";
 
-/** Redux  */
 const pausedOrdersRetriever = createSelector(
   retrieverPausedOrders,
-  (pausedOrders) => ({ pausedOrders })
+  (pausedOrders) => ({ pausedOrders }),
 );
 
 interface PausedOrdersProps {
@@ -30,27 +29,20 @@ export default function PausedOrders(props: PausedOrdersProps) {
   const { authMember, setOrderBuilder } = useGlobals();
   const { pausedOrders } = useSelector(pausedOrdersRetriever);
 
-  /** HANDLER */
   const deleteOrderHandler = async (e: T) => {
     try {
       if (!authMember) throw Error(Messages.error2);
-
       const orderId = e.target.value;
       const input: OrderUpdateInput = {
-        orderId: orderId,
+        orderId,
         orderStatus: OrderStatus.DELETE,
       };
-
-      const confirmation = window.confirm("Do you want to delete this order?");
-      if (confirmation) {
+      if (window.confirm("Do you want to delete this order?")) {
         const order = new OrderService();
         await order.updateOrder(input);
-        // ORDER REBUILD
-        // setValue("2");
-        setOrderBuilder(new Date()); // refresh order page
+        setOrderBuilder(new Date());
       }
     } catch (err) {
-      console.log(err);
       sweetErrorHandling(err).then();
     }
   };
@@ -58,148 +50,117 @@ export default function PausedOrders(props: PausedOrdersProps) {
   const processOrderHandler = async (e: T) => {
     try {
       if (!authMember) throw Error(Messages.error2);
-      // PAYMENT PROCESS
-
       const orderId = e.target.value;
       const input: OrderUpdateInput = {
-        orderId: orderId,
+        orderId,
         orderStatus: OrderStatus.PROCESS,
       };
-
-      const confirmation = window.confirm(
-        "Do you want to proceed with payment?"
-      );
-      if (confirmation) {
+      if (window.confirm("Do you want to proceed with payment?")) {
         const order = new OrderService();
         await order.updateOrder(input);
-        // => PROCESS ORDER
-        setValue("2"); // move to process tab
-        setOrderBuilder(new Date()); // refresh order page
+        setValue("2");
+        setOrderBuilder(new Date());
       }
     } catch (err) {
-      console.log(err);
       sweetErrorHandling(err).then();
     }
   };
 
-  // todo --> when onclick payment button send to payment API
-  // const navigate = useNavigate();
-  // const handlePayment = () => {
-  //   navigate("/payment");
-  // };
-
   return (
-    <TabPanel value="1">
-      <Stack>
-        {/* number of orders */}
-        {pausedOrders.map((order: Order) => {
-          return (
-            <Box
-              key={order._id}
-              component={motion.div}
-              initial={{ y: 50, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1 }}
-              viewport={{ amount: 0.4, once: true }}
-              className="order-main-box"
-            >
-              <Box className="order-box-scroll">
-                {order?.orderItems?.map((item: OrderItem) => {
-                  const product: Product = order.productData.filter(
-                    (ele: Product) => item.productId === ele._id
-                  )[0];
-                  const imagePath = `${serverApi}/${product.productImages[0]}`;
-                  return (
-                    <Box key={item._id} className="orders-name-price">
-                      <Stack className="order-dish-class">
-                        <img
-                          src={imagePath}
-                          width={50}
-                          height={50}
-                          style={{ borderRadius: "50%" }}
-                          className="order-dish-img"
-                          alt="img"
-                        />
-                        <p className="title-dish">{product.productName}</p>
-                      </Stack>
-                      <Stack className="price-box">
-                        <p>${item.itemPrice}</p>
-                        <img
-                          src="/icons/close.svg"
-                          width={50}
-                          height={50}
-                          alt="img"
-                        />
-                        <p>{item.itemQuantity}</p>
-                        <img
-                          src="/icons/pause.svg"
-                          width={50}
-                          height={50}
-                          alt="img"
-                        />
-                        <p style={{ marginLeft: "15px" }}>
-                          ${item.itemQuantity * item.itemPrice}
-                        </p>
-                      </Stack>
-                    </Box>
-                  );
-                })}
-              </Box>
+    <TabPanel value="1" style={{ padding: 0 }}>
+      <Stack gap="16px">
+        {pausedOrders.map((order: Order) => (
+          <Box
+            key={order._id}
+            component={motion.div}
+            initial={{ y: 30, opacity: 0 }}
+            whileInView={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ amount: 0.2, once: true }}
+            className="order-card"
+          >
+            {/* Status badge */}
+            <div className="order-card-status paused">
+              <span className="ocs-dot" />
+              Paused
+            </div>
 
-              <Box className="total-price-box">
-                <Box className="box-total">
-                  <p>Product price</p>
-                  <p>${order.orderTotal - order.orderDelivery}</p>
-                  <img src="/icons/plus.svg" alt="img" />
-                  <p> Delivery cost</p>
-                  <p>${order.orderDelivery}</p>
-                  <img
-                    src="/icons/pause.svg"
-                    alt="img"
-                    style={{ marginLeft: "20px" }}
-                  />
-                  <p>Total</p>
-                  <p>${order.orderTotal}</p>
-                </Box>
-                <div className="btn">
-                  <Button
-                    value={order._id}
-                    variant="contained"
-                    color="secondary"
-                    className={"cancel-button"}
-                    onClick={deleteOrderHandler}
-                  >
-                    Cancel
-                  </Button>
-                  <Button
-                    value={order._id}
-                    variant="contained"
-                    className="pay-button"
-                    onClick={processOrderHandler}
-                  >
-                    Payment
-                  </Button>
-                </div>
-              </Box>
-            </Box>
-          );
-        })}
+            {/* Items */}
+            <div className="order-items-list">
+              {order?.orderItems?.map((item: OrderItem) => {
+                const product: Product = order.productData.filter(
+                  (ele: Product) => item.productId === ele._id,
+                )[0];
+                const imagePath = `${serverApi}/${product.productImages[0]}`;
+                return (
+                  <div key={item._id} className="order-item-row">
+                    <div className="oir-left">
+                      <img
+                        src={imagePath}
+                        alt={product.productName}
+                        className="oir-img"
+                      />
+                      <span className="oir-name">{product.productName}</span>
+                    </div>
+                    <div className="oir-right">
+                      <span className="oir-unit">${item.itemPrice}</span>
+                      <span className="oir-sep">×</span>
+                      <span className="oir-qty">{item.itemQuantity}</span>
+                      <span className="oir-sep">=</span>
+                      <span className="oir-total">
+                        ${item.itemQuantity * item.itemPrice}
+                      </span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
 
-        {!pausedOrders ||
-          (pausedOrders.length === 0 && (
-            <Box
-              display={"flex"}
-              flexDirection={"row"}
-              justifyContent={"center"}
-            >
-              <img
-                src="/icons/noimage-list.svg"
-                alt="img"
-                style={{ width: 300, height: 300 }}
-              />
-            </Box>
-          ))}
+            {/* Footer */}
+            <div className="order-card-footer">
+              <div className="ocf-summary">
+                <span className="ocf-label">Items</span>
+                <span className="ocf-val">
+                  ${order.orderTotal - order.orderDelivery}
+                </span>
+                <span className="ocf-plus">+</span>
+                <span className="ocf-label">Delivery</span>
+                <span className="ocf-val">${order.orderDelivery}</span>
+                <span className="ocf-plus">=</span>
+                <span className="ocf-grand">${order.orderTotal}</span>
+              </div>
+              <div className="ocf-actions">
+                <Button
+                  value={order._id}
+                  className="order-btn cancel"
+                  onClick={deleteOrderHandler}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  value={order._id}
+                  className="order-btn pay"
+                  onClick={processOrderHandler}
+                >
+                  Pay Now →
+                </Button>
+              </div>
+            </div>
+          </Box>
+        ))}
+
+        {pausedOrders.length === 0 && <EmptyOrders />}
       </Stack>
     </TabPanel>
+  );
+}
+
+function EmptyOrders() {
+  return (
+    <div className="order-empty">
+      <div className="order-empty-icon">🛒</div>
+      <p className="order-empty-title">No orders here</p>
+      <p className="order-empty-sub">Your order list is empty</p>
+    </div>
   );
 }

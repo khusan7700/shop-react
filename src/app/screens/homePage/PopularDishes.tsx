@@ -1,27 +1,18 @@
 import React from "react";
 import { Box, Container, Stack } from "@mui/material";
-import { CssVarsProvider } from "@mui/joy";
-import Card from "@mui/joy/Card";
-import CardCover from "@mui/joy/CardCover";
-import CardContent from "@mui/joy/CardContent";
-import Typography from "@mui/joy/Typography";
-import CardOverflow from "@mui/joy/CardOverflow";
-import VisibilityIcon from "@mui/icons-material/Visibility";
-import DescriptionOutlinedIcon from "@mui/icons-material/DescriptionOutlined";
 import { motion } from "framer-motion";
-
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { retrievePopularDishes } from "./selector";
 import { Product } from "../../../lib/types/product";
-import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
 import { useNavigate } from "react-router-dom";
 
-/** REDUX SLICE & SELECTOR **/
 const popularDishesRetriever = createSelector(
   retrievePopularDishes,
-  (popularDishes) => ({ popularDishes })
+  (popularDishes) => ({ popularDishes }),
 );
 
 export default function PopularDishes() {
@@ -29,85 +20,86 @@ export default function PopularDishes() {
   const navigate = useNavigate();
 
   return (
-    <div className={"popular-dishes-frame"}>
+    <div className="popular-dishes-frame">
       <Container>
-        <Stack className={"popular-section"}>
-          <Box className={"category-title"}>Popular Dishes</Box>
-          <Stack className={"cards-frame"}>
+        <Stack className="popular-section">
+          <div className="section-header">
+            <div>
+              <span className="section-eyebrow">🔥 Trending</span>
+              <h2 className="section-title">Popular Dishes</h2>
+            </div>
+            <button
+              className="section-see-all"
+              onClick={() => navigate("/product")}
+            >
+              See all <ArrowForwardIcon style={{ fontSize: 16 }} />
+            </button>
+          </div>
+
+          <div className="popular-cards-grid">
             {popularDishes.length !== 0 ? (
-              popularDishes.map((ele: Product) => {
+              popularDishes.map((ele: Product, i: number) => {
                 const imagePath = `${serverApi}/${ele.productImages[0]}`;
                 return (
-                  <CssVarsProvider key={ele._id}>
-                    <Card
-                      component={motion.div}
-                      initial={{ y: 50, opacity: 0 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.7, delay: 0.2 }}
-                      viewport={{ amount: 0.4, once: true }}
-                      className={"card"}
-                      onClick={(e: React.MouseEvent<HTMLImageElement>) => {
-                        e.preventDefault(); // ixtiyoriy
-                        navigate(`/product`);
-                      }}
-                    >
-                      <CardCover>
-                        <img className="photo" src={imagePath} alt="rasm" />
-                      </CardCover>
-                      <CardCover className={"card-cover"} />
-                      <CardContent sx={{ justifyContent: "flex-end" }}>
-                        <Stack
-                          flexDirection={"row"}
-                          justifyContent={"space-between"}
+                  <motion.div
+                    key={ele._id}
+                    className="popular-card"
+                    initial={{ y: 40, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                    viewport={{ amount: 0.3, once: true }}
+                    whileHover={{ y: -6 }}
+                    onClick={() => navigate("/product")}
+                  >
+                    {/* Image */}
+                    <div className="popular-card-img-wrap">
+                      <img
+                        src={imagePath}
+                        alt={ele.productName}
+                        className="popular-card-img"
+                      />
+                      <div className="popular-card-overlay" />
+                      <div className="popular-card-views">
+                        <VisibilityIcon style={{ fontSize: 13 }} />
+                        <span>{ele.productViews}</span>
+                      </div>
+                    </div>
+
+                    {/* Info */}
+                    <div className="popular-card-info">
+                      <span className="popular-card-name">
+                        {ele.productName}
+                      </span>
+                      <span className="popular-card-desc">
+                        {ele.productDesc
+                          ? ele.productDesc.slice(0, 48) + "…"
+                          : "Freshly prepared"}
+                      </span>
+                      <div className="popular-card-footer">
+                        <span className="popular-card-price">
+                          ${ele.productPrice}
+                        </span>
+                        <button
+                          className="popular-card-btn"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            navigate("/product");
+                          }}
                         >
-                          <Typography
-                            level="h2"
-                            fontSize="lg"
-                            textColor="#fff"
-                            mb={1}
-                          >
-                            {ele.productName}
-                          </Typography>
-                          <Typography
-                            sx={{
-                              fontWeight: "md",
-                              color: "neutral.300",
-                              alignItems: "center",
-                              display: "flex",
-                            }}
-                          >
-                            {ele.productViews}
-                            <VisibilityIcon
-                              sx={{ fontSize: 25, marginLeft: "5px" }}
-                            />
-                          </Typography>
-                        </Stack>
-                      </CardContent>
-                      <CardOverflow
-                        sx={{
-                          display: "flex",
-                          gap: 1.5,
-                          py: 1.5,
-                          px: "var(--Card-padding",
-                          borderTop: "1px solid",
-                          height: "60px",
-                        }}
-                      >
-                        <Typography
-                          startDecorator={<DescriptionOutlinedIcon />}
-                          textColor="neutral.300"
-                        >
-                          {ele.productDesc}
-                        </Typography>
-                      </CardOverflow>
-                    </Card>
-                  </CssVarsProvider>
+                          Order →
+                        </button>
+                      </div>
+                    </div>
+                  </motion.div>
                 );
               })
             ) : (
-              <Box className="no-data">New products are not available!</Box>
+              <div className="home-no-data">
+                <span>🍽️</span>
+                <p>No popular dishes yet</p>
+              </div>
             )}
-          </Stack>
+          </div>
         </Stack>
       </Container>
     </div>

@@ -1,23 +1,17 @@
 import React from "react";
 import { Box, Container, Stack } from "@mui/material";
-import { CssVarsProvider } from "@mui/joy";
-import Card from "@mui/joy/Card";
-import Typography from "@mui/joy/Typography";
-import CardOverflow from "@mui/joy/CardOverflow";
-import AspectRatio from "@mui/joy/AspectRatio";
-import VisibilityIcon from "@mui/icons-material/Visibility";
 import { motion } from "framer-motion";
-
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { retrieveNewDishes } from "./selector";
 import { Product } from "../../../lib/types/product";
 import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
-import { T } from "../../../lib/types/common";
 import { useNavigate } from "react-router-dom";
+import ArrowForwardIcon from "@mui/icons-material/ArrowForward";
 
-/** REDUX SLICE & SELECTOR **/
 const newDishesRetriever = createSelector(retrieveNewDishes, (newDishes) => ({
   newDishes,
 }));
@@ -26,78 +20,71 @@ export default function NewDishes() {
   const { newDishes } = useSelector(newDishesRetriever);
   const navigate = useNavigate();
 
-  console.log("newDishes------->", newDishes);
-
   return (
-    <div className={"new-products-frame"}>
+    <div className="new-products-frame">
       <Container>
-        <Stack className={"main"}>
-          <Box className={"category-title"}>Fresh Menu</Box>
-          <Stack className={"cards-frame"}>
-            <CssVarsProvider>
-              {newDishes.length !== 0 ? (
-                newDishes.map((product: Product) => {
-                  const imagePath = `${serverApi}/${product.productImages[0]}`;
-                  const sizeVolume =
-                    product.productCollection === ProductCollection.DRINK
-                      ? product.productVolume + "l"
-                      : product.productSize + "size";
-                  return (
-                    <Card
-                      component={motion.div}
-                      initial={{ y: 50, opacity: 0 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.7, delay: 0.2 }}
-                      viewport={{ amount: 0.4, once: true }}
-                      variant="outlined"
-                      key={product._id}
-                      className={"card"}
-                    >
-                      <CardOverflow>
-                        <div className={"product-sale"}>{sizeVolume}</div>
-                        <AspectRatio ratio="1">
-                          <img
-                            src={imagePath}
-                            alt="img"
-                            onClick={(
-                              e: React.MouseEvent<HTMLImageElement>
-                            ) => {
-                              e.preventDefault(); // ixtiyoriy
-                              navigate(`/product`);
-                            }}
-                          />
-                        </AspectRatio>
-                      </CardOverflow>
+        <Stack className="main">
+          <div className="section-header">
+            <div>
+              <span className="section-eyebrow">✨ Just arrived</span>
+              <h2 className="section-title" style={{ color: "#fff" }}>
+                Fresh Menu
+              </h2>
+            </div>
+            <button
+              className="section-see-all"
+              onClick={() => navigate("/product")}
+            >
+              See all <ArrowForwardIcon style={{ fontSize: 16 }} />
+            </button>
+          </div>
 
-                      <CardOverflow variant="soft" className={"product-detail"}>
-                        <Stack className={"info"}>
-                          <Stack className={"row"}>
-                            <Typography className={"title"}>
-                              {product.productName}
-                            </Typography>
-                            <Typography className={"price"}>
-                              ${product.productPrice}
-                            </Typography>
-                            {/* <Typography className={"views"}>
-                              {product.productViews}
-                              <VisibilityIcon
-                                sx={{
-                                  FormatSize: 20,
-                                  marginLeft: "5px",
-                                }}
-                              />
-                            </Typography> */}
-                          </Stack>
-                        </Stack>
-                      </CardOverflow>
-                    </Card>
-                  );
-                })
-              ) : (
-                <Box className="no-data">New products are not available!</Box>
-              )}
-            </CssVarsProvider>
-          </Stack>
+          <div className="new-cards-grid">
+            {newDishes.length !== 0 ? (
+              newDishes.map((product: Product, i: number) => {
+                const imagePath = `${serverApi}/${product.productImages[0]}`;
+                const sizeVolume =
+                  product.productCollection === ProductCollection.DRINK
+                    ? product.productVolume + "L"
+                    : product.productSize + " size";
+
+                return (
+                  <motion.div
+                    key={product._id}
+                    className="new-card"
+                    initial={{ y: 40, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                    viewport={{ amount: 0.3, once: true }}
+                    whileHover={{ y: -4 }}
+                    onClick={() => navigate("/product")}
+                  >
+                    <div className="new-card-img-wrap">
+                      <img
+                        src={imagePath}
+                        alt={product.productName}
+                        className="new-card-img"
+                      />
+                      <span className="new-card-badge">{sizeVolume}</span>
+                    </div>
+                    <div className="new-card-info">
+                      <span className="new-card-name">
+                        {product.productName}
+                      </span>
+                      <span className="new-card-price">
+                        ${product.productPrice}
+                      </span>
+                    </div>
+                  </motion.div>
+                );
+              })
+            ) : (
+              <div className="home-no-data">
+                <span>🍜</span>
+                <p>No new dishes yet</p>
+              </div>
+            )}
+          </div>
         </Stack>
       </Container>
     </div>

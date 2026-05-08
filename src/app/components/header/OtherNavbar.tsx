@@ -14,6 +14,7 @@ import { useGlobals } from "../../hooks/useGlobals";
 import { serverApi } from "../../../lib/config";
 import Menu2 from "@mui/material/Menu";
 import { Logout } from "@mui/icons-material";
+import { useEffect, useState } from "react";
 
 interface OtherNavbarProps {
   cartItems: CartItem[];
@@ -43,16 +44,33 @@ export default function OtherNavbar(props: OtherNavbarProps) {
     handleCloseLogout,
     handleLogoutRequest,
   } = props;
+  // component ichida:
+  const [scrolled, setScrolled] = useState(false);
 
   const { authMember } = useGlobals();
 
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", onScroll);
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
   return (
-    <div className="other-navbar">
+    <div className={`other-navbar${scrolled ? " scrolled" : ""}`}>
       <Container className="navbar-container">
         <Stack className="link-container">
           <Box className="brand-logo">
             <NavLink to={"/"}>
-              <img src={"/halal.png"} alt="logo" />
+              <img
+                src={"/halal.png"}
+                alt="logo"
+                style={{
+                  width: "44px",
+                  height: "44px",
+                  borderRadius: "10px",
+                  objectFit: "cover",
+                }}
+              />
             </NavLink>
           </Box>
           <Stack

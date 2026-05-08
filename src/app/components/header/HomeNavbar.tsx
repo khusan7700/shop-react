@@ -1,3 +1,4 @@
+import React from "react";
 import {
   Box,
   Button,
@@ -48,13 +49,23 @@ export default function HomeNavbar(props: NavbarProps) {
 
   return (
     <div className="home-navbar">
+      <div className="navbar-blob blob-1" />
+      <div className="navbar-blob blob-2" />
+      <div className="navbar-blob blob-3" />
+
       <Container className="navbar-container">
         <Stack className="link-container">
           <Box className="brand-logo">
             <NavLink to={"/"}>
-              <img src={"/halal.png"} alt="logo" />
+              <div className="logo-wrapper">
+                <img src={"/halal.png"} alt="logo" />
+                <span className="logo-text">
+                  Halal<em>Kitchen</em>
+                </span>
+              </div>
             </NavLink>
           </Box>
+
           <Stack
             className="navbar-links"
             flexDirection={"row"}
@@ -62,51 +73,24 @@ export default function HomeNavbar(props: NavbarProps) {
             minWidth={"700px"}
             alignItems={"center"}
           >
-            <Box>
-              <NavLink
-                to={"/"}
-                className={({ isActive }) => (isActive ? "active" : "")}
-              >
-                Home
-              </NavLink>
-            </Box>
-            <Box>
-              <NavLink
-                to={"/product"}
-                className={({ isActive }) => (isActive ? "active" : "")}
-              >
-                Product
-              </NavLink>
-            </Box>
-            {authMember ? (
-              <Box>
+            {[
+              { to: "/", label: "Home" },
+              { to: "/product", label: "Menu" },
+              ...(authMember ? [{ to: "/orders", label: "Orders" }] : []),
+              ...(authMember ? [{ to: "/member-page", label: "My Page" }] : []),
+              { to: "/help", label: "Help" },
+            ].map(({ to, label }) => (
+              <Box key={to}>
                 <NavLink
-                  to={"/orders"}
+                  to={to}
                   className={({ isActive }) => (isActive ? "active" : "")}
                 >
-                  Orders
+                  {label}
                 </NavLink>
               </Box>
-            ) : null}
-            {authMember ? (
-              <Box>
-                <NavLink
-                  to={"/member-page"}
-                  className={({ isActive }) => (isActive ? "active" : "")}
-                >
-                  My Page
-                </NavLink>
-              </Box>
-            ) : null}
-            <Box>
-              <NavLink
-                to={"/help"}
-                className={({ isActive }) => (isActive ? "active" : "")}
-              >
-                Help
-              </NavLink>
-            </Box>
-            {authMember ? (
+            ))}
+
+            {authMember && (
               <Basket
                 cartItems={cartItems}
                 onRemove={onRemove}
@@ -114,7 +98,8 @@ export default function HomeNavbar(props: NavbarProps) {
                 onDelete={onDelete}
                 onDeleteAll={onDeleteAll}
               />
-            ) : null}
+            )}
+
             {!authMember ? (
               <Box>
                 <Button
@@ -126,19 +111,22 @@ export default function HomeNavbar(props: NavbarProps) {
                 </Button>
               </Box>
             ) : (
-              <img
-                className="user-avatar"
-                src={
-                  authMember?.memberImage
-                    ? `${serverApi}/${authMember?.memberImage}`
-                    : "/blueUserImg.png"
-                }
-                alt="avatar"
-                aria-haspopup={"true"}
-                onClick={handleLogoutClick}
-              />
+              <div className="avatar-wrapper">
+                <img
+                  className="user-avatar"
+                  src={
+                    authMember?.memberImage
+                      ? `${serverApi}/${authMember?.memberImage}`
+                      : "/blueUserImg.png"
+                  }
+                  alt="avatar"
+                  aria-haspopup="true"
+                  onClick={handleLogoutClick}
+                />
+                <span className="avatar-ring" />
+              </div>
             )}
-            {/* menu  */}
+
             <Menu2
               anchorEl={anchorEl}
               id="account-menu"
@@ -149,14 +137,12 @@ export default function HomeNavbar(props: NavbarProps) {
                 elevation: 0,
                 sx: {
                   overflow: "visible",
-                  filter: "drop-shadow(0px 2px 8px rgba(0,0,0,0.32))",
+                  filter: "drop-shadow(0px 4px 20px rgba(0,0,0,0.5))",
+                  bgcolor: "#1a1a4e",
+                  border: "1px solid rgba(255,255,255,0.08)",
+                  borderRadius: "12px",
                   mt: 1.5,
-                  "& .MuiAvatar-root": {
-                    width: 32,
-                    height: 32,
-                    ml: -0.5,
-                    mr: 1,
-                  },
+                  "& .MuiMenuItem-root": { color: "white" },
                   "&:before": {
                     content: '""',
                     display: "block",
@@ -165,9 +151,11 @@ export default function HomeNavbar(props: NavbarProps) {
                     right: 14,
                     width: 10,
                     height: 10,
-                    bgcolor: "background.paper",
+                    bgcolor: "#1a1a4e",
                     transform: "translateY(-50%) rotate(45deg)",
                     zIndex: 0,
+                    borderTop: "1px solid rgba(255,255,255,0.08)",
+                    borderLeft: "1px solid rgba(255,255,255,0.08)",
                   },
                 },
               }}
@@ -176,14 +164,14 @@ export default function HomeNavbar(props: NavbarProps) {
             >
               <MenuItem onClick={handleLogoutRequest}>
                 <ListItemIcon>
-                  <Logout fontSize="small" style={{ color: "blue" }} />
+                  <Logout fontSize="small" sx={{ color: "#f87171" }} />
                 </ListItemIcon>
                 Logout
               </MenuItem>
             </Menu2>
-            {/* menu  */}
           </Stack>
-          {authMember ? (
+
+          {authMember && (
             <div id="other-basket">
               <Basket
                 cartItems={cartItems}
@@ -193,43 +181,83 @@ export default function HomeNavbar(props: NavbarProps) {
                 onDeleteAll={onDeleteAll}
               />
             </div>
-          ) : null}
+          )}
+
           <Menu
             setSignupOpen={setSignupOpen}
             setLoginOpen={setLoginOpen}
             handleLogoutRequest={handleLogoutRequest}
           />
         </Stack>
+
         <Stack
           component={motion.div}
-          initial={{ y: 50, opacity: 0 }}
+          initial={{ y: 60, opacity: 0 }}
           whileInView={{ y: 0, opacity: 1 }}
-          transition={{ duration: 0.7 }}
-          viewport={{ amount: 0.4 }}
+          transition={{ duration: 0.8, ease: "easeOut" }}
+          viewport={{ amount: 0.3 }}
           className="header-frame"
         >
           <Stack className="detail">
-            <Box className="head-main-txt">
-              Good food, good friends, good times. Where every meal is a
-              celebration. Taste the difference.
-            </Box>
-            <Box className="wel-txt">The Choice, not just a choice</Box>
-            <Box className="service-txt">24 hour service</Box>
-            <Box className="signup">
-              {!authMember ? (
-                <Button
-                  variant={"contained"}
-                  className="signup-button"
-                  onClick={() => setSignupOpen(true)}
-                >
-                  SIGN UP
-                </Button>
-              ) : null}
-            </Box>
+            <motion.div
+              initial={{ x: -40, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.1 }}
+              viewport={{ amount: 0.3 }}
+            >
+              <div className="hero-badge">🍽️ Open 24 hours</div>
+              <Box className="head-main-txt">
+                Good food,
+                <br />
+                good friends,
+                <br />
+                <em>good times.</em>
+              </Box>
+            </motion.div>
+
+            <motion.div
+              initial={{ x: -40, opacity: 0 }}
+              whileInView={{ x: 0, opacity: 1 }}
+              transition={{ duration: 0.7, delay: 0.25 }}
+              viewport={{ amount: 0.3 }}
+            >
+              <Box className="wel-txt">Where every meal is a celebration.</Box>
+              <Box className="service-txt">
+                Taste the difference — The Choice.
+              </Box>
+            </motion.div>
+
+            <motion.div
+              initial={{ y: 20, opacity: 0 }}
+              whileInView={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              viewport={{ amount: 0.3 }}
+            >
+              <Box className="signup">
+                {!authMember && (
+                  <Button
+                    variant="contained"
+                    className="signup-button"
+                    onClick={() => setSignupOpen(true)}
+                  >
+                    Get Started
+                    <span className="btn-arrow">→</span>
+                  </Button>
+                )}
+              </Box>
+            </motion.div>
           </Stack>
-          <Box className={"logo-frame"}>
-            <div className={"logo-img"}></div>
-          </Box>
+
+          <motion.div
+            className="logo-frame"
+            initial={{ scale: 0.85, opacity: 0 }}
+            whileInView={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 0.9, delay: 0.2 }}
+            viewport={{ amount: 0.3 }}
+          >
+            <div className="logo-img" />
+            <div className="logo-glow" />
+          </motion.div>
         </Stack>
       </Container>
     </div>

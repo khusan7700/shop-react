@@ -198,7 +198,7 @@ export default function AuthenticationModal(props: AuthenticationModalProps) {
                 }}
                 variant="extended"
                 color="primary"
-                onChange={handleSignupRequest}
+                onClick={handleSignupRequest}
               >
                 <LoginIcon sx={{ mr: 1 }} />
                 Signup

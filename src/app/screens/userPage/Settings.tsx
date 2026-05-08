@@ -1,6 +1,7 @@
+// Settings.tsx
 import React, { useState } from "react";
 import { Box } from "@mui/material";
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import Button from "@mui/material/Button";
 import { useGlobals } from "../../hooks/useGlobals";
 import { MemberUpdateInput } from "../../../lib/types/member";
@@ -17,7 +18,7 @@ export function Settings() {
   const [memberImage, setMemberImage] = useState<string>(
     authMember?.memberImage
       ? `${serverApi}/${authMember.memberImage}`
-      : `/icons/default-user.svg`
+      : `/icons/default-user.svg`,
   );
 
   const [memberUpdateInput, setMemberUpdateInput] = useState<MemberUpdateInput>(
@@ -27,10 +28,9 @@ export function Settings() {
       memberAddress: authMember?.memberAddress,
       memberDesc: authMember?.memberDesc,
       memberImage: authMember?.memberImage,
-    }
+    },
   );
 
-  /** Handlers */
   const memberNickHandler = (e: T) => {
     memberUpdateInput.memberNick = e.target.value;
     setMemberUpdateInput({ ...memberUpdateInput });
@@ -59,11 +59,9 @@ export function Settings() {
       ) {
         throw new Error(Messages.error3);
       }
-
       const member = new MemberService();
       const result = await member.updateMember(memberUpdateInput);
       setAuthMember(result);
-
       await sweetTopSmallSuccessAlert("Modified Successfully", 700);
     } catch (err) {
       console.log(err);
@@ -73,11 +71,8 @@ export function Settings() {
 
   const handleImageViewer = (e: T) => {
     const file = e.target.files[0];
-    console.log("file:", file);
-
-    const fileType = file.type,
-      validateImageTypes = ["image/jpg", "image/jpeg", "image/png"];
-
+    const fileType = file.type;
+    const validateImageTypes = ["image/jpg", "image/jpeg", "image/png"];
     if (!validateImageTypes.includes(fileType)) {
       sweetErrorHandling(Messages.error5).then();
     } else {
@@ -90,41 +85,60 @@ export function Settings() {
   };
 
   return (
-    <Box className={"settings"}>
-      <Box className={"member-media-frame"}>
-        <img src={memberImage} className={"mb-image"} />
-        <div className={"media-change-box"}>
-          <span>Upload image</span>
-          <p>JPG, JPEG, PNG formats only!</p>
-          <div className={"up-del-box"}>
-            <Button component="label" onChange={handleImageViewer}>
-              <CloudDownloadIcon />
-              <input type="file" hidden />
-            </Button>
-          </div>
-        </div>
-      </Box>
-      <Box className={"input-frame"}>
-        <div className={"long-input"}>
-          <label className={"spec-label"}>Username</label>
+    <Box className="settings">
+      {/* Avatar upload */}
+      <div className="settings-avatar-row">
+        <div className="settings-avatar-wrap">
+          <img src={memberImage} className="settings-avatar-img" alt="avatar" />
+          <label className="settings-avatar-overlay" htmlFor="avatar-upload">
+            <CloudUploadIcon style={{ fontSize: 22, color: "#fff" }} />
+          </label>
           <input
-            className={"spec-input mb-nick"}
-            type="text"
-            placeholder={authMember?.memberNick}
-            value={memberUpdateInput.memberNick}
-            name="memberNick"
-            onClick={memberNickHandler}
+            id="avatar-upload"
+            type="file"
+            hidden
+            onChange={handleImageViewer}
           />
         </div>
-      </Box>
-      <Box className={"input-frame"}>
-        <div className={"short-input"}>
-          <label className={"spec-label"}>Phone</label>
+        <div className="settings-avatar-info">
+          <span className="sai-title">Profile Photo</span>
+          <span className="sai-hint">JPG, JPEG or PNG · max 2MB</span>
+          <Button
+            component="label"
+            className="sai-btn"
+            onChange={handleImageViewer}
+            startIcon={<CloudUploadIcon />}
+          >
+            Upload new photo
+            <input type="file" hidden />
+          </Button>
+        </div>
+      </div>
+
+      {/* Username */}
+      <div className="settings-field-group">
+        <div className="settings-field full">
+          <label className="sf-label">Username</label>
           <input
-            className={"spec-input mb-phone"}
+            className="sf-input"
             type="text"
-            placeholder={authMember?.memberPhone ?? "no phone"}
-            value={memberUpdateInput.memberPhone}
+            placeholder={authMember?.memberNick}
+            value={memberUpdateInput.memberNick ?? ""}
+            name="memberNick"
+            onChange={memberNickHandler}
+          />
+        </div>
+      </div>
+
+      {/* Phone + Address */}
+      <div className="settings-field-group two-col">
+        <div className="settings-field">
+          <label className="sf-label">Phone</label>
+          <input
+            className="sf-input"
+            type="text"
+            placeholder={authMember?.memberPhone ?? "No phone"}
+            value={memberUpdateInput.memberPhone ?? ""}
             name="memberPhone"
             onChange={(e) =>
               setMemberUpdateInput({
@@ -132,20 +146,15 @@ export function Settings() {
                 memberPhone: e.target.value,
               })
             }
-            onClick={memberPhoneHandler}
           />
         </div>
-        <div className={"short-input"}>
-          <label className={"spec-label"}>Address</label>
+        <div className="settings-field">
+          <label className="sf-label">Address</label>
           <input
-            className={"spec-input  mb-address"}
+            className="sf-input"
             type="text"
-            placeholder={
-              authMember?.memberAddress
-                ? authMember.memberAddress
-                : "no address"
-            }
-            value={memberUpdateInput.memberAddress}
+            placeholder={authMember?.memberAddress ?? "No address"}
+            value={memberUpdateInput.memberAddress ?? ""}
             name="memberAddress"
             onChange={(e) =>
               setMemberUpdateInput({
@@ -153,19 +162,20 @@ export function Settings() {
                 memberAddress: e.target.value,
               })
             }
-            onClick={memberAddressHandler}
           />
         </div>
-      </Box>
-      <Box className={"input-frame"}>
-        <div className={"long-input"}>
-          <label className={"spec-label"}>Description</label>
+      </div>
+
+      {/* Description */}
+      <div className="settings-field-group">
+        <div className="settings-field full">
+          <label className="sf-label">Description</label>
           <textarea
-            className={"spec-textarea mb-description"}
+            className="sf-textarea"
             placeholder={
-              authMember?.memberDesc ? authMember.memberDesc : "no description"
+              authMember?.memberDesc ?? "Tell something about yourself..."
             }
-            value={memberUpdateInput.memberDesc}
+            value={memberUpdateInput.memberDesc ?? ""}
             name="memberDesc"
             onChange={(e) =>
               setMemberUpdateInput({
@@ -173,15 +183,16 @@ export function Settings() {
                 memberDesc: e.target.value,
               })
             }
-            onClick={memberDescriptionHandler}
           />
         </div>
-      </Box>
-      <Box className={"save-box"}>
-        <Button variant={"contained"} onClick={handleSubmit}>
-          Save
+      </div>
+
+      {/* Save */}
+      <div className="settings-save-row">
+        <Button className="settings-save-btn" onClick={handleSubmit}>
+          Save Changes
         </Button>
-      </Box>
+      </div>
     </Box>
   );
 }

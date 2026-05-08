@@ -1,18 +1,12 @@
 import React from "react";
 import { Box, Container, Stack } from "@mui/material";
-import { CssVarsProvider, Typography } from "@mui/joy";
 import { motion } from "framer-motion";
-import Card from "@mui/joy/Card";
-import CardOverflow from "@mui/joy/CardOverflow";
-import AspectRatio from "@mui/joy/AspectRatio";
-
 import { useSelector } from "react-redux";
 import { createSelector } from "reselect";
 import { retrieveTopUsers } from "./selector";
 import { serverApi } from "../../../lib/config";
 import { Member } from "../../../lib/types/member";
 
-/** REDUX SLICE & SELECTOR **/
 const topUsersRetriever = createSelector(retrieveTopUsers, (topUsers) => ({
   topUsers,
 }));
@@ -20,55 +14,55 @@ const topUsersRetriever = createSelector(retrieveTopUsers, (topUsers) => ({
 export default function ActiveUsers() {
   const { topUsers } = useSelector(topUsersRetriever);
 
-  console.log("topUsers---->", topUsers);
-
   return (
-    <div className={"active-users-frame"}>
+    <div className="active-users-frame">
       <Container>
-        <Stack className={"main"}>
-          <Box className={"category-title"}>Active users</Box>
-          <Stack className={"card-frame"}>
-            <CssVarsProvider>
-              {topUsers.length !== 0 ? (
-                topUsers.map((member: Member) => {
-                  const imagePath =
-                    member.memberImage && member.memberImage.trim() !== ""
-                      ? `${serverApi}/${member.memberImage}`
-                      : "/default-user-img.jpg";
-                  return (
-                    <Card
-                      component={motion.div}
-                      initial={{ y: 50, opacity: 0 }}
-                      whileInView={{ y: 0, opacity: 1 }}
-                      transition={{ duration: 0.7, delay: 0.2 }}
-                      viewport={{ amount: 0.4, once: true }}
-                      variant="outlined"
-                      key={member._id}
-                      className={"card"}
-                    >
-                      <CardOverflow>
-                        <AspectRatio ratio="1">
-                          <img src={imagePath} alt="" />
-                        </AspectRatio>
-                      </CardOverflow>
+        <Stack className="main">
+          <div className="section-header">
+            <div>
+              <span className="section-eyebrow">👑 Community</span>
+              <h2 className="section-title">Top Members</h2>
+            </div>
+          </div>
 
-                      <CardOverflow variant="soft" className="users-detail">
-                        <Stack className="info">
-                          <Stack flexDirection={"row"}>
-                            <Typography className={"title"}>
-                              {member.memberNick}
-                            </Typography>
-                          </Stack>
-                        </Stack>
-                      </CardOverflow>
-                    </Card>
-                  );
-                })
-              ) : (
-                <Box className="no-data">No active users!</Box>
-              )}
-            </CssVarsProvider>
-          </Stack>
+          <div className="users-grid">
+            {topUsers.length !== 0 ? (
+              topUsers.map((member: Member, i: number) => {
+                const imagePath =
+                  member.memberImage && member.memberImage.trim() !== ""
+                    ? `${serverApi}/${member.memberImage}`
+                    : "/default-user-img.jpg";
+
+                return (
+                  <motion.div
+                    key={member._id}
+                    className="user-card"
+                    initial={{ y: 30, opacity: 0 }}
+                    whileInView={{ y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, delay: i * 0.1 }}
+                    viewport={{ amount: 0.3, once: true }}
+                    whileHover={{ y: -4 }}
+                  >
+                    <div className="user-card-avatar-wrap">
+                      <img
+                        src={imagePath}
+                        alt={member.memberNick}
+                        className="user-card-avatar"
+                      />
+                      <div className="user-card-ring" />
+                    </div>
+                    <span className="user-card-name">{member.memberNick}</span>
+                    <span className="user-card-role">Member</span>
+                  </motion.div>
+                );
+              })
+            ) : (
+              <div className="home-no-data">
+                <span>👥</span>
+                <p>No active users yet</p>
+              </div>
+            )}
+          </div>
         </Stack>
       </Container>
     </div>

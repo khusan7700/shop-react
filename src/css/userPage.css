@@ -1,441 +1,608 @@
+/* userpage.css — to'liq yangi fayl */
+
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap");
+
+/* ============================================================
+   WRAPPER
+   ============================================================ */
+
+.user-page-wrapper {
+  width: 100%;
+  min-height: 100vh;
+  background: #07091a;
+}
+
+/* ============================================================
+   HERO BANNER
+   ============================================================ */
+
+.user-hero {
+  position: relative;
+  width: 100%;
+  height: 180px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+}
+
+.user-hero-bg {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 30% 50%, #1e1060 0%, #07091a 65%);
+  z-index: 0;
+}
+
+.user-hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.user-hero-blob.b1 {
+  width: 400px;
+  height: 400px;
+  background: #5a3fff;
+  top: -180px;
+  right: -60px;
+  opacity: 0.15;
+}
+
+.user-hero-blob.b2 {
+  width: 200px;
+  height: 200px;
+  background: #ff6b35;
+  bottom: -80px;
+  left: 20%;
+  opacity: 0.08;
+}
+
+.user-hero-content {
+  position: relative;
+  z-index: 1;
+  padding-bottom: 28px;
+}
+
+.user-hero-eyebrow {
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: rgba(167, 139, 250, 0.7);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.user-hero-title {
+  font-family: "Playfair Display", serif;
+  font-size: 38px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 4px 0;
+  line-height: 1.1;
+}
+
+.user-hero-sub {
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
+}
+
+/* ============================================================
+   MAIN PAGE
+   ============================================================ */
+
 .user-page {
   width: 100%;
-  height: 1100px;
-  display: flex;
-  background-color: rgb(22, 18, 49);
-}
-
-.user-page-line .user-txt {
-  width: 100%;
-  height: 100px;
-  background-color: #7770a5;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: rgb(233, 233, 233);
-  font-size: 24px;
-  font-weight: 700;
-}
-.user-page-line .user-txt .txt {
-  width: auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: rgb(233, 233, 233);
-  font-size: 24px;
-  font-weight: 700;
-}
-
-.user-page .css-heg063-MuiTabs-flexContainer {
-  flex-direction: column;
-}
-
-.user-page .css-mn3ro6-MuiTabs-indicator {
-  height: 0px;
-  width: 0px;
-}
-
-.user-page .css-1ujnqem-MuiTabs-root {
-  width: 100%;
+  padding: 40px 0 80px;
+  background: #07091a;
 }
 
 .user-page .my-page-frame {
   width: 100%;
-  height: auto;
   display: flex;
   flex-direction: row;
-  padding: 50px 0 50px 0;
+  gap: 28px;
+  align-items: flex-start;
 }
 
-.my-page-frame .my-page-left {
-  width: 70%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
+/* ---- LEFT ---- */
+
+.user-page .my-page-left {
+  flex: 1;
+  min-width: 0;
 }
 
-.my-page-left .menu-name {
-  width: 100%;
-  height: 70px;
-  display: flex;
-  justify-content: center;
-  border-bottom: 1px solid #f8f8ff;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 45px;
-  color: #f8f8ff;
+.user-page .section-card {
+  background: #0f1130;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  padding: 28px 32px 32px;
 }
 
-.my-page-left .menu-content {
-  margin-top: 10px;
-  width: 100%;
-  height: auto;
+.user-page .section-card-header {
   display: flex;
-  flex-direction: column;
-}
-
-.my-page-left .write-content {
-  margin-top: 10px;
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.user-page .menu-content .post-content {
-  margin-top: 10px;
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.my-page-frame .my-page-right {
-  margin-left: 30px;
-  width: 30%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.user-page .order-info-box {
-  position: relative;
-  padding: 20px;
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
   align-items: center;
-  background: #919191;
-  box-shadow: 15px 14px 4px rgba(0, 0, 0, 0.25),
-    inset -1px 0px 16px 13px rgb(24 23 112 / 20%);
-  border-radius: 16px;
+  gap: 14px;
+  margin-bottom: 4px;
 }
 
-.user-page .order-info-box .settings-btn {
-  position: absolute;
-  top: 6%;
-  right: 19%;
-  cursor: pointer;
-}
-
-.user-page .order-info-box .order-user-img {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.user-page .order-info-box .order-user-img .order-user-avatar {
-  width: 150px;
-  height: 150px;
-  filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
-  border-radius: 37px;
-}
-
-.user-page .order-info-box .order-user-icon-box {
-  position: absolute;
-  padding: 5px;
-  width: 37px;
-  height: 37px;
-  top: 81%;
-  right: 0;
-  display: flex;
-  background: rgb(209 209 209 / 33%);
-  border-radius: 37px;
-}
-
-.user-page .order-info-box .order-user-name {
-  margin-top: 10px;
-  font-family: "Commissioner";
-  font-style: normal;
-  font-weight: 500;
+.user-page .section-card-icon {
   font-size: 28px;
-  line-height: 36px;
-  color: #e0e0e0;
 }
 
-.user-page .order-info-box .order-user-prof {
-  font-family: "Commissioner";
-  font-style: normal;
-  font-weight: 500;
-  font-size: 20px;
-  line-height: 36px;
-  color: #eeeeee;
+.user-page .section-card-title {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
 }
 
-.user-page .order-info-box .user-media-box {
-  margin-top: 10px;
-  width: 60%;
+.user-page .section-card-desc {
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+  margin: 2px 0 0;
+}
+
+.user-page .section-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  margin: 20px 0;
+}
+
+/* ---- RIGHT ---- */
+
+.user-page .my-page-right {
+  width: 300px;
+  flex-shrink: 0;
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
+  flex-direction: column;
+  gap: 16px;
 }
 
-.user-page .order-info-box .user-desc {
-  margin-top: 30px;
-  width: 90%;
+/* Profile card */
+.user-page .profile-card {
+  background: #0f1130;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.user-page .profile-card-strip {
+  height: 80px;
+  background: linear-gradient(135deg, #7c3aed 0%, #1e1060 100%);
+  position: relative;
+}
+
+.user-page .profile-card-strip::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+
+.user-page .profile-card-body {
+  padding: 0 24px 28px;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-page .profile-avatar-wrap {
+  position: relative;
+  margin-top: -44px;
+  margin-bottom: 14px;
+}
+
+.user-page .profile-avatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  border: 3px solid #0f1130;
+  object-fit: cover;
+  display: block;
+}
+
+.user-page .profile-badge-wrap {
+  position: absolute;
+  bottom: 2px;
+  right: 0;
+  width: 26px;
+  height: 26px;
+  background: #1e1b4b;
+  border-radius: 50%;
+  border: 2px solid #0f1130;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  font-family: "DM Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 24px;
-  color: #616164;
+  overflow: hidden;
 }
 
-.user-page .order-info-box .css-1e3kzd4-MuiButtonBase-root-MuiButton-root {
-  margin-top: 15px;
-  min-width: 90%;
-  height: 44px;
-  text-transform: capitalize;
-  font-style: normal;
-  font-weight: 600;
-  font-size: 25px;
-  line-height: 38px;
-  color: #f8f8ff;
+.user-page .profile-badge-wrap img {
+  width: 16px;
+  height: 16px;
+  object-fit: contain;
 }
 
-.user-page .menu-box img {
-  width: 25px;
+.user-page .profile-name {
+  font-family: "Playfair Display", serif;
+  font-size: 20px;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 0 6px;
+  text-align: center;
 }
 
-.user-page .menu-box span {
-  margin-left: 30px;
-  font-family: "Poppins";
-  font-style: normal;
-  font-weight: 600;
-  font-size: 25px;
-  line-height: 38px;
-  color: #ff0000;
+.user-page .profile-role-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: rgba(167, 139, 250, 0.12);
+  border: 1px solid rgba(167, 139, 250, 0.25);
+  border-radius: 20px;
+  padding: 3px 12px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  color: #a78bfa;
+  margin-bottom: 18px;
 }
+
+.user-page .profile-info-rows {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.user-page .profile-info-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.user-page .pir-icon {
+  font-size: 15px;
+  flex-shrink: 0;
+}
+
+.user-page .profile-divider {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.07);
+  margin-bottom: 14px;
+}
+
+.user-page .profile-desc {
+  font-family: "DM Sans", sans-serif;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.35);
+  text-align: center;
+  line-height: 1.6;
+  margin: 0 0 20px;
+}
+
+.user-page .profile-socials {
+  display: flex;
+  gap: 8px;
+}
+
+.user-page .social-btn {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.user-page .social-btn.fb {
+  background: rgba(59, 89, 152, 0.15);
+  color: #6b9bff;
+}
+.user-page .social-btn.ig {
+  background: rgba(228, 64, 95, 0.12);
+  color: #f77a8c;
+}
+.user-page .social-btn.tg {
+  background: rgba(0, 136, 204, 0.12);
+  color: #5dc8ef;
+}
+.user-page .social-btn.yt {
+  background: rgba(255, 0, 0, 0.1);
+  color: #ff6b6b;
+}
+
+.user-page .social-btn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.2);
+  filter: brightness(1.3);
+}
+
+/* Stats mini-cards */
+.user-page .profile-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.user-page .stat-card {
+  background: #0f1130;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
+  padding: 14px 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.user-page .stat-num {
+  font-family: "Playfair Display", serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #a78bfa;
+}
+
+.user-page .stat-label {
+  font-family: "DM Sans", sans-serif;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.35);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+/* ============================================================
+   SETTINGS FORM
+   ============================================================ */
 
 .user-page .settings {
-  width: 95%;
-  height: auto;
+  width: 100%;
   display: flex;
   flex-direction: column;
+  gap: 20px;
 }
 
-.user-page .settings .input-frame {
-  width: 100%;
-  height: auto;
+/* Avatar row */
+.user-page .settings-avatar-row {
   display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-.user-page .settings .short-input {
-  width: 49%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-}
-
-.user-page .settings .long-input {
-  width: 100%;
-  height: auto;
-  display: flex;
-  flex-direction: column;
-}
-.user-page .settings .spec-label {
-  font-family: "Source Serif Pro";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 25px;
-  color: #f8f8ff;
-}
-
-.user-page .settings .spec-input {
-  position: relative;
-  margin-top: 10px;
-  padding-left: 20px;
-  width: 100%;
-  height: 54px;
-  border: none;
-  background: #f7f7f7;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
-  font-family: "GT Walsheim Pro";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 26px;
-  color: #4f547b;
-}
-
-.user-page .settings .spec-textarea {
-  position: relative;
-  margin-top: 10px;
-  padding: 20px;
-  width: 100%;
-  height: 200px;
-  border: none;
-  background: #f7f7f7;
-  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-  border-radius: 5px;
-  font-family: "GT Walsheim Pro";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 15px;
-  line-height: 26px;
-  color: #4f547b;
-}
-
-.user-page .settings .member-media-frame {
-  margin-top: 25px;
-  position: relative;
-  padding: 10px;
-  width: 100%;
-  height: auto;
-  display: flex;
-  border-radius: 5px;
-}
-
-.user-page .settings .member-media-frame .mb-image {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
-}
-
-.user-page .settings .media_change-box {
-  position: relative;
-  margin-left: 20px;
-  width: auto;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-
-.user-page .settings .media-change-box span {
-  font-family: "GT Walsheim Pro";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 18px;
-  color: #140342;
-}
-
-.user-page .settings .media-change-box p {
-  margin: 10px 0px 14px 0px;
-  font-family: "GT Walsheim Pro";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 16px;
-  color: #4f547b;
-}
-
-.user-page .settings .up-del-box {
-  position: relative;
-  width: 37px;
-  height: 37px;
-  display: flex;
-  background: #cbcbcb;
-  border-radius: 8px;
-  justify-content: center;
   align-items: center;
+  gap: 20px;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 12px;
 }
 
-.user-page .settings .up-del-box input {
+.user-page .settings-avatar-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.user-page .settings-avatar-img {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid rgba(167, 139, 250, 0.4);
+  display: block;
+}
+
+.user-page .settings-avatar-overlay {
   position: absolute;
-  width: 20px;
-  height: 16px;
-  padding: 0;
-  background: red;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  border: 0;
+  inset: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  cursor: pointer;
+  transition: opacity 0.2s;
 }
 
-.user-page .settings .save-box {
+.user-page .settings-avatar-wrap:hover .settings-avatar-overlay {
+  opacity: 1;
+}
+
+.user-page .settings-avatar-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.user-page .sai-title {
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.user-page .sai-hint {
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.user-page .sai-btn {
+  margin-top: 6px !important;
+  background: rgba(167, 139, 250, 0.12) !important;
+  color: #a78bfa !important;
+  border: 1px solid rgba(167, 139, 250, 0.3) !important;
+  border-radius: 8px !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 12px !important;
+  font-weight: 500 !important;
+  padding: 5px 14px !important;
+  text-transform: none !important;
+  transition: all 0.2s !important;
+  width: fit-content !important;
+}
+
+.user-page .sai-btn:hover {
+  background: rgba(167, 139, 250, 0.22) !important;
+}
+
+/* Field groups */
+.user-page .settings-field-group {
+  display: flex;
+  gap: 16px;
+}
+
+.user-page .settings-field-group.two-col .settings-field {
+  flex: 1;
+}
+
+.user-page .settings-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.user-page .settings-field.full {
+  width: 100%;
+}
+
+.user-page .sf-label {
+  font-family: "DM Sans", sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.user-page .sf-input {
+  width: 100%;
+  height: 48px;
+  padding: 0 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  outline: none;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+  box-sizing: border-box;
+}
+
+.user-page .sf-input:focus {
+  border-color: rgba(167, 139, 250, 0.5);
+  background: rgba(167, 139, 250, 0.06);
+}
+
+.user-page .sf-input::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+.user-page .sf-textarea {
+  width: 100%;
+  height: 120px;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  font-family: "DM Sans", sans-serif;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.85);
+  outline: none;
+  resize: vertical;
+  transition:
+    border-color 0.2s,
+    background 0.2s;
+  box-sizing: border-box;
+}
+
+.user-page .sf-textarea:focus {
+  border-color: rgba(167, 139, 250, 0.5);
+  background: rgba(167, 139, 250, 0.06);
+}
+
+.user-page .sf-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.2);
+}
+
+/* Save button */
+.user-page .settings-save-row {
   display: flex;
   justify-content: flex-end;
-  margin-top: 25px;
+  padding-top: 4px;
+}
+
+.user-page .settings-save-btn {
+  background: linear-gradient(135deg, #7c3aed, #a78bfa) !important;
+  color: #fff !important;
+  border-radius: 10px !important;
+  font-family: "DM Sans", sans-serif !important;
+  font-size: 14px !important;
+  font-weight: 500 !important;
+  padding: 10px 28px !important;
+  text-transform: none !important;
+  box-shadow: 0 6px 24px rgba(124, 58, 237, 0.35) !important;
+  transition: all 0.25s ease !important;
+}
+
+.user-page .settings-save-btn:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 10px 32px rgba(124, 58, 237, 0.5) !important;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 900px) {
+  .user-page .my-page-frame {
+    flex-direction: column-reverse;
+  }
+
+  .user-page .my-page-right {
+    width: 100%;
+  }
+
+  .user-page .profile-stats {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 568px) {
+  .user-hero-title {
+    font-size: 28px;
+  }
+
+  .user-page .section-card {
+    padding: 20px 16px 24px;
+  }
+
+  .user-page .settings-field-group.two-col {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 390px) {
-  .user-page {
-    width: 100%;
-    height: 1200px;
-    display: flex;
-    background-color: rgb(22, 18, 49);
+  .user-hero {
+    height: 150px;
   }
-  .user-page .my-page-frame {
-    width: 100%;
-    height: 1220px;
-    display: flex;
-    flex-direction: column;
-    padding: 50px 0 50px 0;
-    flex-direction: column-reverse;
-  }
-  .my-page-frame .my-page-left {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-  }
-  .my-page-frame .my-page-right {
-    margin-left: 0px;
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    color: rgb(236, 236, 236);
-  }
-  .my-page-left .menu-name {
-    width: 100%;
-    height: 70px;
-    align-items: center;
-    border-bottom: 1px solid #f8f8ff;
-    border-top: 1px solid #f8f8ff;
-    font-weight: 600;
-    font-size: 30px;
-  }
-}
 
-@media screen and (max-width: 865px) and (min-width: 391px) {
-  .user-page {
-    width: 100%;
-    height: 1200px;
-    display: flex;
-    background-color: rgb(22, 18, 49);
+  .user-hero-title {
+    font-size: 24px;
   }
-  .user-page .my-page-frame {
-    width: 100%;
-    height: 1220px;
-    display: flex;
-    flex-direction: column;
-    padding: 50px 0 50px 0;
-    flex-direction: column-reverse;
-  }
-  .my-page-frame .my-page-left {
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    margin-top: 20px;
-  }
-  .my-page-frame .my-page-right {
-    margin-left: 0px;
-    width: 100%;
-    height: auto;
-    display: flex;
-    flex-direction: column;
-    color: rgb(236, 236, 236);
-  }
-  .my-page-left .menu-name {
-    width: 100%;
-    height: 70px;
-    align-items: center;
-    border-bottom: 1px solid #f8f8ff;
-    border-top: 1px solid #f8f8ff;
-    font-weight: 600;
-    font-size: 30px;
+
+  .user-page .section-card-title {
+    font-size: 18px;
   }
 }

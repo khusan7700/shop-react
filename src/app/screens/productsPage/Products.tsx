@@ -1,9 +1,9 @@
 import React, { ChangeEvent, useEffect, useState } from "react";
-import { Box, Button, Container, Pagination, Stack } from "@mui/material";
+import { Box, Container, Pagination, Stack } from "@mui/material";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import { motion } from "framer-motion";
 import AddShoppingCartIcon from "@mui/icons-material/AddShoppingCart";
-
+import SearchIcon from "@mui/icons-material/Search";
 import { createSelector } from "reselect";
 import { Product, ProductInquiry } from "../../../lib/types/product";
 import { Dispatch } from "@reduxjs/toolkit";
@@ -13,11 +13,9 @@ import { useDispatch, useSelector } from "react-redux";
 import ProductService from "../../services/ProductService";
 import { ProductCollection } from "../../../lib/enums/product.enum";
 import { serverApi } from "../../../lib/config";
-import Input from "@mui/joy/Input";
 import { useNavigate } from "react-router-dom";
 import { CartItem } from "../../../lib/types/search";
 
-/** REDUX SLICE & SELECTOR **/
 const actionDispatch = (dispatch: Dispatch) => ({
   setProducts: (data: Product[]) => dispatch(setProducts(data)),
 });
@@ -30,20 +28,34 @@ interface ProductsProps {
   onAdd: (item: CartItem) => void;
 }
 
+const COLLECTIONS = [
+  { label: "🍽 Dish", value: ProductCollection.DISH },
+  { label: "🥗 Salad", value: ProductCollection.SALAD },
+  { label: "🍰 Dessert", value: ProductCollection.DESSERT },
+  { label: "🥤 Drink", value: ProductCollection.DRINK },
+  { label: "✨ Other", value: ProductCollection.OTHER },
+];
+
+const ORDERS = [
+  { label: "New", value: "createdAt" },
+  { label: "Price", value: "productPrice" },
+  { label: "Views", value: "productViews" },
+];
+
 export default function Products(props: ProductsProps) {
   const { onAdd } = props;
   const { setProducts } = actionDispatch(useDispatch());
   const { products } = useSelector(productsRetriever);
+  const navigate = useNavigate();
+
   const [productSearch, setProductSearch] = useState<ProductInquiry>({
     page: 1,
     limit: 9,
-    order: "createAt",
+    order: "createdAt",
     productCollection: ProductCollection.DISH,
     search: "",
   });
-
   const [searchText, setSearchText] = useState<string>("");
-  const navigate = useNavigate();
 
   useEffect(() => {
     const product = new ProductService();
@@ -53,7 +65,6 @@ export default function Products(props: ProductsProps) {
       .catch((err) => console.log(err));
   }, [productSearch]);
 
-  // when to click search's X give us all products
   useEffect(() => {
     if (searchText === "") {
       productSearch.search = "";
@@ -61,9 +72,7 @@ export default function Products(props: ProductsProps) {
     }
   }, [searchText]);
 
-  /** HANDLERS **/
-
-  const serachCollectionHandler = (collection: ProductCollection) => {
+  const searchCollectionHandler = (collection: ProductCollection) => {
     productSearch.page = 1;
     productSearch.productCollection = collection;
     setProductSearch({ ...productSearch });
@@ -85,158 +94,127 @@ export default function Products(props: ProductsProps) {
     setProductSearch({ ...productSearch });
   };
 
-  const choosenDishHandler = (id: string) => {
+  // ✅ navigate to chosen product
+  const chosenProductHandler = (id: string) => {
     navigate(`/product/${id}`);
   };
 
   return (
     <div className="product">
-      <div className={"product-top"}>
-        <div className={"product-txt"}>
-          <p>Shop Page</p>
+      {/* Hero */}
+      <div className="product-top">
+        <div className="product-hero-bg" />
+        <div className="product-hero-blob pb1" />
+        <div className="product-hero-blob pb2" />
+        <div className="product-hero-content">
+          <span className="product-hero-eyebrow">🍴 Menu</span>
+          <h1 className="product-hero-title">Our Products</h1>
+          <p className="product-hero-sub">
+            Discover our freshly prepared dishes
+          </p>
         </div>
       </div>
+
       <Container>
-        <Stack className={"product-frame"}>
-          <Stack
-            component={motion.div}
-            initial={{ y: 50, opacity: 0 }}
-            whileInView={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1 }}
-            viewport={{ amount: 0.4, once: true }}
-            className={"product-left"}
+        <Stack className="product-frame">
+          {/* LEFT sidebar */}
+          <motion.div
+            initial={{ x: -30, opacity: 0 }}
+            whileInView={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.5 }}
+            viewport={{ once: true }}
+            className="product-left"
           >
-            <Button
-              variant="contained"
-              color={
-                productSearch.productCollection === ProductCollection.DISH
-                  ? "primary"
-                  : "secondary"
-              }
-              onClick={() => serachCollectionHandler(ProductCollection.DISH)}
+            <p className="sidebar-section-label">Category</p>
+            {COLLECTIONS.map((col) => (
+              <button
+                key={col.value}
+                className={`sidebar-btn ${
+                  productSearch.productCollection === col.value ? "active" : ""
+                }`}
+                onClick={() => searchCollectionHandler(col.value)}
+              >
+                {col.label}
+              </button>
+            ))}
+
+            <div className="sidebar-divider" />
+
+            <p className="sidebar-section-label">Search</p>
+            <div className="sidebar-search-wrap">
+              <SearchIcon className="sidebar-search-icon" />
+              <input
+                type="search"
+                className="sidebar-search-input"
+                placeholder="Search..."
+                value={searchText}
+                onChange={(e) => setSearchText(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") searchProductHandler();
+                }}
+              />
+            </div>
+            <button
+              className="sidebar-btn active search-btn"
+              onClick={searchProductHandler}
             >
-              Dish
-            </Button>
-            <Button
-              variant="contained"
-              color={
-                productSearch.productCollection === ProductCollection.SALAD
-                  ? "primary"
-                  : "secondary"
-              }
-              onClick={() => serachCollectionHandler(ProductCollection.SALAD)}
-            >
-              Salad
-            </Button>
-            <Button
-              variant="contained"
-              color={
-                productSearch.productCollection === ProductCollection.DESSERT
-                  ? "primary"
-                  : "secondary"
-              }
-              onClick={() => serachCollectionHandler(ProductCollection.DESSERT)}
-            >
-              Dessert
-            </Button>
-            <Button
-              variant="contained"
-              color={
-                productSearch.productCollection === ProductCollection.DRINK
-                  ? "primary"
-                  : "secondary"
-              }
-              onClick={() => serachCollectionHandler(ProductCollection.DRINK)}
-            >
-              Drink
-            </Button>
-            <Button
-              variant="contained"
-              color={
-                productSearch.productCollection === ProductCollection.OTHER
-                  ? "primary"
-                  : "secondary"
-              }
-              onClick={() => serachCollectionHandler(ProductCollection.OTHER)}
-            >
-              Other
-            </Button>
-            <input
-              type={"search"}
-              className={"custom-input"}
-              placeholder="search product....."
-              name={"singleResearch"}
-              style={{ color: "blue" }}
-              value={searchText}
-              onChange={(e) => setSearchText(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") searchProductHandler();
-              }}
-            />
-            <Button variant="contained" onClick={searchProductHandler}>
-              SEARCH
-            </Button>
-          </Stack>
-          <Stack className={"product-right"}>
-            <Stack
-              component={motion.div}
-              initial={{ y: 50, opacity: 0 }}
+              Search
+            </button>
+          </motion.div>
+
+          {/* RIGHT content */}
+          <Stack className="product-right">
+            {/* Sort bar */}
+            <motion.div
+              initial={{ y: -20, opacity: 0 }}
               whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1 }}
-              viewport={{ amount: 0.4, once: true }}
-              className={"menu"}
+              transition={{ duration: 0.4 }}
+              viewport={{ once: true }}
+              className="sort-bar"
             >
-              <Button
-                variant="contained"
-                color={
-                  productSearch.order === "createdAt" ? "primary" : "secondary"
-                }
-                onClick={() => searchOrderHandler("createdAt")}
-              >
-                New
-              </Button>
-              <Button
-                variant="contained"
-                color={
-                  productSearch.order === "productPrice"
-                    ? "primary"
-                    : "secondary"
-                }
-                onClick={() => searchOrderHandler("productPrice")}
-              >
-                Price
-              </Button>
-              <Button
-                variant="contained"
-                color={
-                  productSearch.order === "productViews"
-                    ? "primary"
-                    : "secondary"
-                }
-                onClick={() => searchOrderHandler("productViews")}
-              >
-                Views
-              </Button>{" "}
-            </Stack>
+              <span className="sort-label">Sort by:</span>
+              {ORDERS.map((ord) => (
+                <button
+                  key={ord.value}
+                  className={`sort-btn ${
+                    productSearch.order === ord.value ? "active" : ""
+                  }`}
+                  onClick={() => searchOrderHandler(ord.value)}
+                >
+                  {ord.label}
+                </button>
+              ))}
+            </motion.div>
+
+            {/* Cards grid */}
             <Box
               component={motion.div}
-              initial={{ y: 50, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1 }}
-              className={"card-box"}
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="card-box"
             >
               {products.length !== 0 ? (
-                products.map((product: Product, index) => {
-                  const imagePath = `${serverApi}/${product.productImages}`;
-                  const sizeVolume =
-                    product.productCollection === ProductCollection.DRINK
-                      ? product.productVolume + "litre"
-                      : product.productSize + "size";
+                products.map((product: Product) => {
+                  const imagePath = `${serverApi}/${product.productImages[0]}`;
                   return (
-                    <Box className="card">
-                      <Stack key={product._id} className="box">
-                        <AddShoppingCartIcon
-                          className={"productBasket"}
+                    <motion.div
+                      key={product._id}
+                      className="product-card"
+                      whileHover={{ y: -4 }}
+                      transition={{ duration: 0.2 }}
+                      onClick={() => chosenProductHandler(product._id)}
+                    >
+                      {/* Image */}
+                      <div className="product-card-img-wrap">
+                        <img
+                          src={imagePath}
+                          alt={product.productName}
+                          className="product-card-img"
+                        />
+                        {/* Add to cart */}
+                        <button
+                          className="product-card-cart-btn"
                           onClick={(e) => {
                             e.stopPropagation();
                             onAdd({
@@ -247,44 +225,61 @@ export default function Products(props: ProductsProps) {
                               image: product.productImages[0],
                             });
                           }}
-                        />
-                        <img src={imagePath} alt="" />
-                        <div className={"box-txt"}>
-                          <p>{product.productName}</p>
-                          <p>{product.productPrice} $ </p>
-                          <VisibilityIcon
-                            className="viewIcon"
-                            sx={{
-                              color:
-                                product.productViews === 0 ? "gray" : "white",
-                            }}
-                          />
-                          <span className="viewNumber">
-                            {product.productViews}
+                        >
+                          <AddShoppingCartIcon style={{ fontSize: 18 }} />
+                        </button>
+                      </div>
+
+                      {/* Info */}
+                      <div className="product-card-info">
+                        <span className="product-card-name">
+                          {product.productName}
+                        </span>
+                        <div className="product-card-bottom">
+                          <span className="product-card-price">
+                            ${product.productPrice}
                           </span>
+                          <div className="product-card-views">
+                            <VisibilityIcon style={{ fontSize: 13 }} />
+                            <span>{product.productViews}</span>
+                          </div>
                         </div>
-                      </Stack>
-                      <Stack className="under-box"></Stack>
-                    </Box>
+                      </div>
+                    </motion.div>
                   );
                 })
               ) : (
-                <Box className="no-data">New products are not available!</Box>
+                <div className="product-no-data">
+                  <span>🍽️</span>
+                  <p>No products available</p>
+                </div>
               )}
             </Box>
           </Stack>
         </Stack>
-        <Stack spacing={2} className={"pagination"}>
+
+        {/* Pagination */}
+        <Stack spacing={2} className="pagination">
           <Pagination
-            className={"paginationNumber"}
+            className="paginationNumber"
             count={
               products.length !== 0
                 ? productSearch.page + 1
                 : productSearch.page
             }
             color="primary"
-            // page={productSearch.page}
             onChange={paginationHandler}
+            sx={{
+              "& .MuiPaginationItem-root": {
+                color: "rgba(255,255,255,0.5)",
+                borderColor: "rgba(255,255,255,0.1)",
+              },
+              "& .MuiPaginationItem-root.Mui-selected": {
+                background: "linear-gradient(135deg, #7c3aed, #a78bfa)",
+                color: "#fff",
+                border: "none",
+              },
+            }}
           />
         </Stack>
       </Container>
